@@ -1,8 +1,3 @@
-# React + Vite
+# se_final_colormuller_frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ColorMuller is an app that uses 3 different open-source API: Colormind, Color Thief, and Unsplash. Using these 3 API together, the app generates color palettes to help inspire creative minds.

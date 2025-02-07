@@ -1,0 +1,66 @@
+.switch {
+  display: flex;
+  position: relative;
+  font-size: 14px;
+  line-height: 17.4px;
+  color: rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+}
+
+.switch:hover {
+  color: rgba(0, 0, 0, 1);
+  transition: all 0.2s;
+}
+
+.switch__box {
+  border-radius: 25px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  width: 56px;
+  height: 28px;
+  appearance: none;
+  transition: all 0.2s;
+}
+
+.switch__box:hover {
+  border: 2px solid rgba(0, 0, 0, 1);
+}
+
+.switch__slider {
+  border-radius: 20px;
+  width: 28px;
+  height: 28px;
+  background-color: rgb(255, 255, 255);
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  transition: all 0.2s;
+}
+
+.switch__box:checked ~ .switch__slider {
+  left: 26px;
+}
+
+.switch__sun {
+  position: absolute;
+  top: 3px;
+  left: 29px;
+  width: 22px;
+  opacity: 30%;
+}
+.switch__box:checked ~ .switch__sun {
+  opacity: 100%;
+}
+
+.switch__moon {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  opacity: 100%;
+}
+
+.switch__box:checked ~ .switch__moon {
+  opacity: 30%;
+}

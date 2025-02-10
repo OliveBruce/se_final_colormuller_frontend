@@ -2,7 +2,7 @@ import "./ModalWithForm.css";
 import close from "../../assets/close.svg";
 
 function ModalWithForm({
-  activeModal,
+  isOpen,
   handleClose,
   title,
   buttonText,
@@ -10,7 +10,7 @@ function ModalWithForm({
   children,
 }) {
   return (
-    <div className={`modal ${activeModal === "signup" && "modal__opened"}`}>
+    <div className={`modal ${isOpen && "modal__opened"}`}>
       <div className="modal__content">
         <h2 className="modal__title">{title}</h2>
         <button onClick={handleClose} type="button" className="modal__close">
@@ -22,7 +22,6 @@ function ModalWithForm({
             <button type="submit" className="modal__submit">
               {buttonText}
             </button>
-            <p className="modal__or">or</p>
             {redirectButton}
           </div>
         </form>

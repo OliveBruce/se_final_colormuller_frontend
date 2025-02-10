@@ -1,15 +1,18 @@
 .header {
   display: flex;
   align-items: center;
-  padding: 10px 0 14px;
+  padding: 10px 14px;
   margin: 0;
   background-color: #333;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
 .header__logo {
   margin: 0 10px 0 10px;
-  height: 64px;
   width: 64px;
+  background-color: #232323;
+  border-radius: 14px;
 }
 
 .header__site-name {
@@ -21,7 +24,7 @@
 
 .header__browse-btn {
   margin: 0;
-  padding: 14px 24px;
+  padding: 12px 24px;
   border: none;
   border-radius: 5px;
   background-color: #9e5d47;

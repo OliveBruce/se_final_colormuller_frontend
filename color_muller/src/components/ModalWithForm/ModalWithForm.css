@@ -27,13 +27,13 @@
   padding: 0;
   position: absolute;
   top: 20px;
-  right: 28px;
+  right: 20px;
   border: none;
   background-color: transparent;
 }
 
 .modal__content {
-  background-color: #232323;
+  background-color: #101010;
   border-radius: 30px;
   position: relative;
   padding: 40px;
@@ -102,12 +102,6 @@ input:-webkit-autofill:active {
   border-radius: 4px;
   border-style: none;
   cursor: pointer;
-}
-
-.modal__or {
-  margin: 0;
-  margin-left: 20px;
-  color: #fff;
 }
 
 .modal__buttons-wrapper {

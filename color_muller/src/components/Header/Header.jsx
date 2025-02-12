@@ -3,6 +3,7 @@ import logo from "../../assets/colormuller.svg";
 import { useContext } from "react";
 
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import UserButton from "../UserButton/UserButton";
 
 function Header({ onSignUpClick, onLoginClick, onUploadImageClick }) {
   return (
@@ -18,20 +19,8 @@ function Header({ onSignUpClick, onLoginClick, onUploadImageClick }) {
         >
           Browse Collections
         </button>
-        <button
-          onClick={onLoginClick}
-          type="button"
-          className="header__user-btn header__login"
-        >
-          Login
-        </button>
-        <button
-          onClick={onSignUpClick}
-          type="button"
-          className="header__user-btn header__signup"
-        >
-          Sign Up
-        </button>
+        <UserButton onButtonClick={onLoginClick} buttonText="Log In" />
+        <UserButton onButtonClick={onSignUpClick} buttonText="Sign Up" />
       </div>
     </header>
   );

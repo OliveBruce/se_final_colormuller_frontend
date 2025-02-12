@@ -1,0 +1,15 @@
+.user-button {
+  margin: 0;
+  padding: 12px 24px;
+  border: 2px solid #fff;
+  border-radius: 100px;
+  background-color: #3aab7c;
+  font-size: 18px;
+  line-height: 24px;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.user-button:hover {
+  background-color: #38df9a;
+}

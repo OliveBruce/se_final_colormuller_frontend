@@ -9,6 +9,7 @@ import ProvideImageModal from "../ProvideImageModal/ProvideImageModal";
 import Footer from "../Footer/Footer";
 import GenerateCard from "../GenerateCard/GenerateCard";
 import GenerateCardSection from "../GenerateCardSection/GenerateCardSection";
+import Main from "../Main/Main";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -47,9 +48,10 @@ function App() {
     <div className="app">
       <div className="app__content">
         <Header onSignUpClick={onSignUpClick} onLoginClick={onLoginClick} />
-        <GenerateCardSection
+        <Main
           onUploadImageClick={onUploadImageClick}
           onSignUpClick={onSignUpClick}
+          onLoginClick={onLoginClick}
         />
         <Footer />
       </div>

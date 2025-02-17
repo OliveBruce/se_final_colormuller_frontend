@@ -1,7 +1,3 @@
-.generate-card-section {
-  background-color: #4b4b4b;
-}
-
 .generate-card-section__header {
   margin: auto;
   text-align: center;
@@ -40,4 +36,6 @@
 .generate-card-section__cards {
   display: flex;
   gap: 24px;
+  align-items: center;
+  justify-content: center;
 }

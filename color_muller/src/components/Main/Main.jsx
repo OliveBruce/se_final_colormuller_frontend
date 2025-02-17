@@ -5,11 +5,13 @@ import MainBrowseSection from "../MainBrowseSection/MainBrowseSection";
 function Main({ onUploadImageClick, onSignUpClick, onLoginClick }) {
   return (
     <main>
-      <GenerateCardSection
-        onSignUpClick={onSignUpClick}
-        onUploadImageClick={onUploadImageClick}
-      />
-      <MainBrowseSection onLoginClick={onLoginClick} />
+      <div className="main__container">
+        <GenerateCardSection
+          onSignUpClick={onSignUpClick}
+          onUploadImageClick={onUploadImageClick}
+        />
+        <MainBrowseSection onLoginClick={onLoginClick} />
+      </div>
     </main>
   );
 }

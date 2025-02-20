@@ -3,9 +3,14 @@
   align-items: center;
   padding: 10px 14px;
   margin: 0;
+}
+
+.header--dark {
   background-color: #333;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
+}
+
+.header--light {
+  background-color: #a9a9a9;
 }
 
 .header__link {

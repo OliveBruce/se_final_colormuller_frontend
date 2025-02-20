@@ -1,9 +1,19 @@
 .footer {
   display: flex;
   align-items: center;
-  padding: 32px 0 28px;
+  padding: 32px 16px 28px;
   font-size: 15px;
   line-height: 20px;
+}
+
+.footer--dark {
+  background-color: #333;
+  color: #fff;
+}
+
+.footer--light {
+  background-color: #a9a9a9;
+  color: #000;
 }
 
 .footer__copyright-year {

@@ -1,4 +1,11 @@
 .main__container {
-  background-color: #4b4b4b;
   padding: 25px;
+}
+
+.main__container--light {
+  background-color: #ffffff;
+}
+
+.main__container--dark {
+  background-color: #4b4b4b;
 }

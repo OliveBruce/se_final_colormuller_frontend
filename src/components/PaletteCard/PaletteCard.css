@@ -14,14 +14,22 @@
   height: 568px;
   border: none;
   border-radius: 16px;
-  background-color: #232323;
-  color: #fff;
   transition: all 0.2s;
   position: relative;
 }
 
 .palette-card__container:hover {
   background-color: #426154;
+}
+
+.palette-card__container--dark {
+  background-color: #232323;
+  color: #fff;
+}
+
+.palette-card__container--light {
+  background-color: #e6e6e6;
+  color: #000;
 }
 
 .palette-card__header {
@@ -44,6 +52,8 @@
   position: absolute;
   right: 10px;
   top: 10px;
+  border: #2323237f 2px solid;
+  border-radius: 100px;
 }
 
 .palette-card__subtitle {
@@ -88,5 +98,5 @@
 
 .palette-card__footer {
   margin: 0;
-  color: #58d19f;
+  color: #757575;
 }

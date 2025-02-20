@@ -4,9 +4,20 @@ import GenerateCardUploadPhoto from "../GenerateCardUploadPhoto/GenerateCardUplo
 import "./GenerateCardSection.css";
 import logo from "../../assets/colormuller.svg";
 
-function GenerateCardSection({ onUploadImageClick, onSignUpClick }) {
+function GenerateCardSection({
+  onUploadImageClick,
+  onSignUpClick,
+  currentBGTheme,
+}) {
   return (
-    <div className="generate-card-section">
+    <div
+      className={
+        "generate-card-section" +
+        (currentBGTheme === "light"
+          ? " generate-card-section--light"
+          : " generate-card-section--dark")
+      }
+    >
       <div className="generate-card-section__header">
         <img
           className="generate-card-section__logo"
@@ -23,14 +34,27 @@ function GenerateCardSection({ onUploadImageClick, onSignUpClick }) {
           Please enjoy discovering fun color schemes!
         </p>
       </div>
-      <div className="generate-card-section__cards-section">
+      <div
+        className={
+          "generate-card-section__cards-section" +
+          (currentBGTheme === "light"
+            ? " generate-card-section__cards-section--light"
+            : " generate-card-section__cards-section--dark")
+        }
+      >
         <h3 className="generate-card-section__cards-section-header">
           Generate A Color Palette:
         </h3>
         <div className="generate-card-section__cards">
-          <GenerateCardRandomPhoto />
-          <GenerateCardPalette onSignUpClick={onSignUpClick} />
-          <GenerateCardUploadPhoto onUploadImageClick={onUploadImageClick} />
+          <GenerateCardRandomPhoto currentBGTheme={currentBGTheme} />
+          <GenerateCardPalette
+            onSignUpClick={onSignUpClick}
+            currentBGTheme={currentBGTheme}
+          />
+          <GenerateCardUploadPhoto
+            onUploadImageClick={onUploadImageClick}
+            currentBGTheme={currentBGTheme}
+          />
         </div>
       </div>
     </div>

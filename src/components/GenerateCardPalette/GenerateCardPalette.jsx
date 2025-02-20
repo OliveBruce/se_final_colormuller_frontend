@@ -1,9 +1,13 @@
 import GenerateCard from "../GenerateCard/GenerateCard";
 import PaletteColor from "../PaletteColor/PaletteColor";
 
-function GenerateCardPalette({ onSignUpClick }) {
+function GenerateCardPalette({ onSignUpClick, currentBGTheme }) {
   return (
-    <GenerateCard title="RANDOM COLOR PALETTE" onGenerateClick={onSignUpClick}>
+    <GenerateCard
+      title="RANDOM COLOR PALETTE"
+      onGenerateClick={onSignUpClick}
+      currentBGTheme={currentBGTheme}
+    >
       <div className="generate-card__palette">
         <PaletteColor color="#F9F8F9" colorText="#F9F8F9" />
         <PaletteColor color="#B1A9C5" colorText="#B1A9C5" />

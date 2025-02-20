@@ -3,10 +3,23 @@ import LikeImage from "../../assets/like.svg";
 import PaletteColor from "../PaletteColor/PaletteColor";
 import rgbHex from "rgb-hex";
 
-function PaletteCard({ paletteImage, paletteTitle, paletteColors, creator }) {
+function PaletteCard({
+  paletteImage,
+  paletteTitle,
+  paletteColors,
+  creator,
+  currentBGTheme,
+}) {
   return (
     <div className="palette-card">
-      <div className="palette-card__container">
+      <div
+        className={
+          "palette-card__container" +
+          (currentBGTheme === "light"
+            ? " palette-card__container--light"
+            : " palette-card__container--dark")
+        }
+      >
         <div className="palette-card__header">
           <h2 className="palette-card__title">{paletteTitle}</h2>
           <img src={LikeImage} alt="Like" className="palette-card__like" />

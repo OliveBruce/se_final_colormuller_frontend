@@ -2,13 +2,21 @@ import "./Header.css";
 import logo from "../../assets/colormuller.svg";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import UserButton from "../UserButton/UserButton";
 
 function Header({ onSignUpClick, onLoginClick, onUploadImageClick }) {
+  const { currentBGTheme } = useContext(CurrentBackgroundPreference);
+
   return (
-    <header className="header">
+    <header
+      className={
+        "header" +
+        (currentBGTheme === "light" ? " header--light" : " header--dark")
+      }
+    >
       <Link to="/" className="header__link">
         <div className="header__logo-container">
           <img className="header__logo" alt="ColorMuller logo" src={logo} />

@@ -1,5 +1,8 @@
-import { createContext } from "react";
+import React from "react";
 
-const CurrentBackgroundPreference = createContext();
+const CurrentBackgroundPreference = React.createContext({
+  currentBGTheme: "",
+  handleToggleSwitchChange: () => {},
+});
 
 export { CurrentBackgroundPreference };

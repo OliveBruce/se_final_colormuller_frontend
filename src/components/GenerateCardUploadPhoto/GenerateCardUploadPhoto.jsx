@@ -12,11 +12,11 @@ function GenerateCardUploadPhoto({ onUploadImageClick }) {
         src={upload_photo}
       />
       <div className="generate-card__palette generate-card__palette-with-image">
-        <PaletteColor color="E92DF6" textColor="FFFFFF" />
-        <PaletteColor color="C5BC39" textColor="FFFFFF" />
-        <PaletteColor color="04EDF7" textColor="232323" />
-        <PaletteColor color="003AFA" textColor="FFFFFF" />
-        <PaletteColor color="00BB65" textColor="FFFFFF" />
+        <PaletteColor color="#E92DF6" colorText="#E92DF6" />
+        <PaletteColor color="#C5BC39" colorText="#C5BC39" />
+        <PaletteColor color="#04EDF7" colorText="#04EDF7" />
+        <PaletteColor color="#003AFA" colorText="#003AFA" />
+        <PaletteColor color="#00BB65" colorText="#00BB65" />
       </div>
     </GenerateCard>
   );

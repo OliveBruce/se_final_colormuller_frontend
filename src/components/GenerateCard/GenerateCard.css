@@ -1,17 +1,16 @@
-.palette-card {
-  margin: 0;
-  max-width: 400px;
+.generate-card {
   background-color: transparent;
   display: flex;
   justify-content: center;
+  align-items: center;
   border-radius: 16px;
 }
 
-.palette-card__container {
+.generate-card__content {
   margin: 0;
   padding: 18px 15px;
   width: 400px;
-  height: 568px;
+  height: 584px;
   border: none;
   border-radius: 16px;
   background-color: #232323;
@@ -20,65 +19,51 @@
   position: relative;
 }
 
-.palette-card__container:hover {
+.generate-card__content:hover {
   background-color: #426154;
 }
 
-.palette-card__header {
-  display: flex;
-  justify-content: center;
-  margin: 0 0 14px;
-}
-
-.palette-card__title {
-  margin: 0;
-  font-size: 20px;
+.generate-card__title {
+  margin: 0 0 30px;
+  font-size: 24px;
   line-height: 20px;
   letter-spacing: -2px;
 }
 
-.palette-card__like {
-  width: 32px;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
-
-.palette-card__subtitle {
+.generate-card__subtitle {
   margin: -20px 0 14px;
   font-size: 16px;
 }
 
-.palette-card__image {
+.generate-card__image {
   margin: 0 -15px 14px;
 }
 
-.palette-card__palette {
+.generate-card__palette {
   margin: 0 0 14px;
   display: flex;
   width: 100%;
   height: 100%;
-  max-height: 498px;
+  max-height: 472px;
   gap: 8px;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.palette-card__palette-with-image {
+.generate-card__palette-with-image {
   max-height: 200px;
 }
 
-.palette-card__color-name {
+.generate-card__color-name {
   font-size: 10px;
   line-height: 20px;
+  text-align: center;
   position: absolute;
   bottom: 6px;
-  left: 6px;
+  width: 68px;
 }
 
-.palette-card__footer {
+.generate-card__footer {
   margin: 0;
   color: #58d19f;
 }

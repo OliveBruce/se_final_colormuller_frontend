@@ -12,11 +12,11 @@ function GenerateCardRandomPhoto() {
         src={random_photo}
       />
       <div className="generate-card__palette generate-card__palette-with-image">
-        <PaletteColor color="E1E6EC" textColor="232323" />
-        <PaletteColor color="FBC301" textColor="232323" />
-        <PaletteColor color="7A4201" textColor="FFFFFF" />
-        <PaletteColor color="576872" textColor="FFFFFF" />
-        <PaletteColor color="252A2E" textColor="FFFFFF" />
+        <PaletteColor color="#E1E6EC" colorText="#E1E6EC" />
+        <PaletteColor color="#FBC301" colorText="#FBC301" />
+        <PaletteColor color="#7A4201" colorText="#7A4201" />
+        <PaletteColor color="#576872" colorText="#576872" />
+        <PaletteColor color="#252A2E" colorText="#252A2E" />
       </div>
     </GenerateCard>
   );

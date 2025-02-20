@@ -1,4 +1,5 @@
 import "./MainBrowseSection.css";
+import { defaultPalettes } from "../../utils/constants";
 import PaletteCard from "../PaletteCard/PaletteCard";
 import UserButton from "../UserButton/UserButton";
 
@@ -13,9 +14,17 @@ function MainBrowseSection({ onLoginClick }) {
         </p>
       </div>
       <ul className="main-browse-section__list">
-        <PaletteCard />
-        <PaletteCard />
-        <PaletteCard />
+        {defaultPalettes.slice(0, 3).map((palette) => {
+          return (
+            <PaletteCard
+              key={palette._id}
+              paletteImage={palette.image}
+              paletteColors={palette.colors}
+              paletteTitle={palette.title}
+              creator={palette.creator}
+            />
+          );
+        })}
       </ul>
     </div>
   );

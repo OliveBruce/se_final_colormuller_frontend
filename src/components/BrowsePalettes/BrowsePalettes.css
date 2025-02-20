@@ -1,0 +1,29 @@
+.browse-palettes {
+  margin: 0 auto;
+  padding: 25px;
+  align-items: center;
+  background-color: #4b4b4b;
+}
+
+.browse-palettes__title {
+  margin: 0;
+  padding: 0;
+  font-size: 48px;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+}
+
+.browse-palettes__palettes {
+  margin: 20px;
+  background-color: #676767;
+  border-radius: 16px;
+}
+
+.browse-palettes__palette-list {
+  padding: 35px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}

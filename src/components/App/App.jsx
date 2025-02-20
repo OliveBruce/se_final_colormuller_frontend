@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import Header from "../Header/Header";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
@@ -10,6 +11,7 @@ import Footer from "../Footer/Footer";
 import GenerateCard from "../GenerateCard/GenerateCard";
 import GenerateCardSection from "../GenerateCardSection/GenerateCardSection";
 import Main from "../Main/Main";
+import BrowsePalettes from "../BrowsePalettes/BrowsePalettes";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -45,26 +47,39 @@ function App() {
   }, [activeModal]);
 
   return (
-    <div className="app">
-      <div className="app__content">
-        <Header onSignUpClick={onSignUpClick} onLoginClick={onLoginClick} />
-        <Main
-          onUploadImageClick={onUploadImageClick}
-          onSignUpClick={onSignUpClick}
-          onLoginClick={onLoginClick}
+    <BrowserRouter>
+      <div className="app">
+        <div className="app__content">
+          <Header onSignUpClick={onSignUpClick} onLoginClick={onLoginClick} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  onUploadImageClick={onUploadImageClick}
+                  onSignUpClick={onSignUpClick}
+                  onLoginClick={onLoginClick}
+                />
+              }
+            />
+            <Route path="/browse-palettes" element={<BrowsePalettes />} />
+          </Routes>
+          <Footer />
+        </div>
+        <SignUpModal
+          isOpen={activeModal === "signup"}
+          handleClose={handleClose}
         />
-        <Footer />
+        <LoginModal
+          isOpen={activeModal === "login"}
+          handleClose={handleClose}
+        />
+        <ProvideImageModal
+          isOpen={activeModal === "upload-image"}
+          handleClose={handleClose}
+        />
       </div>
-      <SignUpModal
-        isOpen={activeModal === "signup"}
-        handleClose={handleClose}
-      />
-      <LoginModal isOpen={activeModal === "login"} handleClose={handleClose} />
-      <ProvideImageModal
-        isOpen={activeModal === "upload-image"}
-        handleClose={handleClose}
-      />
-    </div>
+    </BrowserRouter>
   );
 }
 

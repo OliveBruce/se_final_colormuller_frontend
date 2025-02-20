@@ -1,0 +1,12 @@
+.palette-color__color {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.generate-card__color-name {
+  color: rgb(255, 255, 255);
+  text-shadow: -1px -1px 4px #000, 1px -1px 4px #000, -1px 1px 4px #000,
+    1px 1px 4px #000;
+  opacity: 0.8;
+}

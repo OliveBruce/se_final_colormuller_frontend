@@ -10,11 +10,6 @@ function GenerateCardUploadPhoto({ onUploadImageClick, currentBGTheme }) {
       currentBGTheme={currentBGTheme}
     >
       <p className="generate-card__subtitle">& GET COLOR PALETTE</p>
-      <img
-        className="generate-card__image"
-        alt="Colorful concert"
-        src={upload_photo}
-      />
       <div className="generate-card__palette generate-card__palette-with-image">
         <PaletteColor color="#E92DF6" colorText="#E92DF6" />
         <PaletteColor color="#C5BC39" colorText="#C5BC39" />
@@ -22,6 +17,11 @@ function GenerateCardUploadPhoto({ onUploadImageClick, currentBGTheme }) {
         <PaletteColor color="#003AFA" colorText="#003AFA" />
         <PaletteColor color="#00BB65" colorText="#00BB65" />
       </div>
+      <img
+        className="generate-card__image"
+        alt="Colorful concert"
+        src={upload_photo}
+      />
     </GenerateCard>
   );
 }

@@ -40,3 +40,21 @@
   list-style-type: none;
   gap: 21px;
 }
+
+@media screen and (max-width: 375px) {
+  .main-browse-section {
+    padding: 15px;
+  }
+  .main-browse-section__title {
+    margin: auto auto 15px;
+    font-size: 22px;
+  }
+  .main-browse-section__description-container {
+    margin: 0 0 15px;
+    display: block;
+    text-align: center;
+  }
+  .main-browse-section__description {
+    font-size: 12px;
+  }
+}

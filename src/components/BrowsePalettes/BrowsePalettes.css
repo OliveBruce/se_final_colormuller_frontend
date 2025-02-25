@@ -42,3 +42,22 @@
   gap: 25px;
   justify-content: center;
 }
+
+@media screen and (max-width: 375px) {
+  .browse-palettes {
+    margin: 0 auto;
+    padding: 10px;
+    align-items: center;
+  }
+  .browse-palettes__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .browse-palettes__palettes {
+    margin: 20px;
+    border-radius: 16px;
+  }
+  .browse-palettes__palette-list {
+    padding: 15px 0;
+  }
+}

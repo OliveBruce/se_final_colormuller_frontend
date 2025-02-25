@@ -5,8 +5,18 @@
 }
 
 .generate-card__color-name {
+  margin: 0;
   color: rgb(255, 255, 255);
   text-shadow: -1px -1px 4px #000, 1px -1px 4px #000, -1px 1px 4px #000,
     1px 1px 4px #000;
   opacity: 0.8;
+}
+
+@media screen and (max-width: 375px) {
+  .generate-card__color-name {
+    max-width: 100%;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    font-size: 8px;
+  }
 }

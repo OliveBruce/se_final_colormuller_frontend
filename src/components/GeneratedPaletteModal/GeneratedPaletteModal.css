@@ -1,0 +1,64 @@
+.generated-card-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+
+.modal__opened {
+  visibility: visible;
+}
+
+.generated-card-modal__container {
+  border-radius: 30px;
+  position: relative;
+  padding: 70px 40px 40px;
+  max-width: 480px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+}
+
+.generated-card-modal__container--dark {
+  background-color: #232323;
+}
+
+.generated-card-modal__container--light {
+  background-color: #e6e6e6;
+}
+
+.generated-card-modal__close-btn {
+  padding: 0;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  border: none;
+  background-color: transparent;
+}
+
+.generated-card-modal__palette {
+  margin: 0;
+  display: flex;
+  width: 400px;
+  height: 568px;
+  max-height: 580px;
+  gap: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.generated-card-modal__image {
+  margin: 0;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}

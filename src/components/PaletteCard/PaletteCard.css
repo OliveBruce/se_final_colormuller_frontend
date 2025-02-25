@@ -1,6 +1,8 @@
 .palette-card {
   margin: 0;
   max-width: 400px;
+  max-height: 604px;
+  min-height: 0;
   background-color: transparent;
   display: flex;
   justify-content: center;
@@ -84,10 +86,6 @@
   overflow: hidden;
 }
 
-.palette-card__palette-with-image {
-  max-height: 200px;
-}
-
 .palette-card__color-name {
   font-size: 10px;
   line-height: 20px;
@@ -99,4 +97,26 @@
 .palette-card__footer {
   margin: 0;
   color: #757575;
+}
+
+@media screen and (max-width: 375px) {
+  .palette-card__container {
+    width: 225px;
+    height: 330px;
+  }
+  .palette-card__image {
+    height: 180px;
+  }
+  .palette-card__palette {
+    max-height: 275px;
+  }
+  .palette-card__title {
+    font-size: 16px;
+  }
+  .palette-card__like {
+    width: 24px;
+  }
+  .palette-card__footer {
+    font-size: 12px;
+  }
 }

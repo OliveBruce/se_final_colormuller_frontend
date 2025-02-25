@@ -8,6 +8,7 @@ function GenerateCardSection({
   onUploadImageClick,
   onSignUpClick,
   currentBGTheme,
+  onSavePaletteClick,
 }) {
   return (
     <div
@@ -46,7 +47,10 @@ function GenerateCardSection({
           Generate A Color Palette:
         </h3>
         <div className="generate-card-section__cards">
-          <GenerateCardRandomPhoto currentBGTheme={currentBGTheme} />
+          <GenerateCardRandomPhoto
+            currentBGTheme={currentBGTheme}
+            onSavePaletteClick={onSavePaletteClick}
+          />
           <GenerateCardPalette
             onSignUpClick={onSignUpClick}
             currentBGTheme={currentBGTheme}

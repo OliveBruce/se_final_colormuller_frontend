@@ -4,7 +4,13 @@ import MainBrowseSection from "../MainBrowseSection/MainBrowseSection";
 import { useContext } from "react";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 
-function Main({ onUploadImageClick, onSignUpClick, onLoginClick }) {
+function Main({
+  onUploadImageClick,
+  onSignUpClick,
+  onLoginClick,
+  onSavePaletteClick,
+  isLoggedIn,
+}) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
 
   return (
@@ -21,10 +27,13 @@ function Main({ onUploadImageClick, onSignUpClick, onLoginClick }) {
           onSignUpClick={onSignUpClick}
           onUploadImageClick={onUploadImageClick}
           currentBGTheme={currentBGTheme}
+          onSavePaletteClick={onSavePaletteClick}
         />
         <MainBrowseSection
           onLoginClick={onLoginClick}
+          onUploadImageClick={onUploadImageClick}
           currentBGTheme={currentBGTheme}
+          isLoggedIn={isLoggedIn}
         />
       </div>
     </main>

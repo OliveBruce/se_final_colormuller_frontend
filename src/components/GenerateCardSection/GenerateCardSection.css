@@ -53,3 +53,23 @@
   align-items: center;
   justify-content: center;
 }
+
+@media screen and (max-width: 375px) {
+  .generate-card-section__logo {
+    width: 75px;
+    border-radius: 18px;
+  }
+  .generate-card-section__description {
+    margin: 6px 36px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .generate-card-section__cards-section-header {
+    margin: 0 auto 15px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .generate-card-section__cards {
+    display: block;
+  }
+}

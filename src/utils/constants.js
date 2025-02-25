@@ -80,7 +80,7 @@ export const defaultPalettes = [
     creator: "Olivia Bruce",
   },
   {
-    _id: 4,
+    _id: 6,
     title: "Palette 5",
     image: "",
     colors: [

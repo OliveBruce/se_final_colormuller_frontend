@@ -26,7 +26,6 @@ function PaletteCard({
         </div>
         <ul className="palette-card__palette">
           {paletteColors.map((color) => {
-            console.log(color.color);
             if (color.color.includes("#")) {
               return (
                 <PaletteColor

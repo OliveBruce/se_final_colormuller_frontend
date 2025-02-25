@@ -1,0 +1,252 @@
+.profile__container {
+  padding: 25px 65px;
+  z-index: 0;
+  transition: all 0.2s;
+}
+
+.profile__container--light {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.profile__container--dark {
+  background-color: #4b4b4b;
+  color: #fff;
+}
+
+.profile__header {
+  margin: 0 0 25px;
+  width: 528px;
+  height: 136px;
+  position: relative;
+}
+
+.profile__bg {
+  position: absolute;
+  bottom: 0;
+  left: 50px;
+  width: 475px;
+  height: 76px;
+  border-radius: 16px;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.profile__bg--light {
+  background-color: #a9a9a9;
+}
+
+.profile__bg--dark {
+  background-color: #676767;
+}
+
+.profile__header-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+  position: inherit;
+}
+
+.profile__user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  bottom: 18px;
+  right: 31px;
+}
+
+.profile__avatar {
+  width: 136px;
+  height: 136px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.profile__username {
+  margin: 0;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.profile__button {
+  background-color: transparent;
+  border: none;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.profile__edit-profile {
+  color: #40a37a;
+  margin: 0;
+  padding: 0;
+}
+
+.profile__edit-profile:hover {
+  text-decoration: underline;
+  color: #aafbcf;
+}
+
+.profile__logout {
+  color: #c67676;
+  margin: 0;
+  padding: 0;
+}
+
+.profile__logout:hover {
+  text-decoration: underline;
+  color: #ffc7c7;
+}
+
+.profile__saved-palettes {
+  margin: 0;
+  padding: 33px;
+  border-radius: 16px;
+  background-color: #676767;
+  position: relative;
+}
+
+.profile__tab-btn {
+  position: relative; /* Ensure the parent container is relative */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 164px;
+  height: 64px;
+  background-color: #40a37a;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.profile__tab-btn:hover:not(.profile__tab-btn--active) {
+  background-color: #53e8aa;
+}
+
+.profile__tab-btn-radio {
+  appearance: none;
+  width: 164px;
+  height: 64px;
+}
+
+.profile__tab-btn--active {
+  background-color: #676767;
+}
+
+.profile__tab-btn-my-palettes {
+  position: absolute;
+  top: -64px;
+  left: 600px;
+}
+
+.profile__tab-btn-saved-palettes {
+  position: absolute;
+  top: -64px;
+  left: 770px;
+}
+
+.profile__tab-text {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.profile__palette-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  gap: 25px;
+  row-gap: 25px;
+}
+
+@media screen and (max-width: 900px) {
+  .profile__container {
+    padding: 40px;
+  }
+  .profile__header {
+    margin: 0 0 65px;
+    width: 445px;
+  }
+  .profile__header-content {
+    height: 100%;
+  }
+  .profile__bg {
+    width: 445px;
+  }
+  .profile__user-info {
+    align-items: flex-start;
+    bottom: 10px;
+    right: 5px;
+  }
+  .profile__tab-btn {
+    width: 132px;
+    height: 50px;
+  }
+  .profile__tab-btn-my-palettes {
+    top: -50px;
+    left: 150px;
+  }
+  .profile__tab-btn-saved-palettes {
+    top: -50px;
+    left: 282px;
+  }
+  .profile__tab-text {
+    top: 15%;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .profile__container {
+    padding: 15px;
+  }
+  .profile__header {
+    margin: 0 0 65px;
+    width: 245px;
+  }
+  .profile__header-content {
+    height: 100%;
+  }
+  .profile__avatar {
+    width: 100px;
+    height: 100px;
+  }
+  .profile__bg {
+    width: 200px;
+    height: 100px;
+  }
+  .profile__user-info {
+    flex-direction: column;
+    align-items: flex-start;
+    bottom: 10px;
+    right: 10px;
+  }
+  .profile__tab-btn {
+    width: 100px;
+    height: 50px;
+  }
+  .profile__tab-btn-my-palettes {
+    position: absolute;
+    top: -50px;
+    left: 50px;
+    width: 100px;
+  }
+  .profile__tab-btn-saved-palettes {
+    position: absolute;
+    top: -50px;
+    left: 155px;
+  }
+  .profile__tab-text {
+    top: 15%;
+    font-size: 12px;
+  }
+}

@@ -2,8 +2,14 @@ import "./MainBrowseSection.css";
 import { defaultPalettes } from "../../utils/constants";
 import PaletteCard from "../PaletteCard/PaletteCard";
 import UserButton from "../UserButton/UserButton";
+import BrowsePalettesButton from "../BrowsePalettesButton/BrowsePalettesButton";
 
-function MainBrowseSection({ onLoginClick, currentBGTheme }) {
+function MainBrowseSection({
+  onLoginClick,
+  onUploadImageClick,
+  currentBGTheme,
+  isLoggedIn,
+}) {
   return (
     <div
       className={
@@ -14,12 +20,19 @@ function MainBrowseSection({ onLoginClick, currentBGTheme }) {
       }
     >
       <h1 className="main-browse-section__title">Browse Palettes:</h1>
-      <div className="main-browse-section__description-container">
-        <UserButton onButtonClick={onLoginClick} buttonText="Log In" />
-        <p className="main-browse-section__description">
-          to save palettes others have generated.
-        </p>
-      </div>
+      {isLoggedIn ? (
+        <div className="main-browse-section__description-container">
+          <BrowsePalettesButton onUploadImageClick={onUploadImageClick} />
+        </div>
+      ) : (
+        <div className="main-browse-section__description-container">
+          <UserButton onButtonClick={onLoginClick} buttonText="Log In" />
+          <p className="main-browse-section__description">
+            to save palettes others have generated.
+          </p>
+        </div>
+      )}
+
       <ul className="main-browse-section__list">
         {defaultPalettes.slice(0, 3).map((palette) => {
           return (

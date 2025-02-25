@@ -13,10 +13,14 @@ import GenerateCard from "../GenerateCard/GenerateCard";
 import GenerateCardSection from "../GenerateCardSection/GenerateCardSection";
 import Main from "../Main/Main";
 import BrowsePalettes from "../BrowsePalettes/BrowsePalettes";
+import SavePaletteModal from "../SavePaletteModal/SavePaletteModal";
+import GeneratedPaletteModal from "../GeneratedPaletteModal/GeneratedPaletteModal";
+import Profile from "../Profile/Profile";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [currentBGTheme, setCurrentBGTheme] = useState("dark");
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const onSignUpClick = () => {
     setActiveModal("signup");
@@ -28,6 +32,14 @@ function App() {
 
   const onUploadImageClick = () => {
     setActiveModal("upload-image");
+  };
+
+  const onSavePaletteClick = () => {
+    setActiveModal("save-palette");
+  };
+
+  const onGeneratePaletteClick = () => {
+    setActiveModal("generated-palette");
   };
 
   const handleClose = () => {
@@ -66,7 +78,11 @@ function App() {
           value={{ currentBGTheme, handleToggleSwitchChange }}
         >
           <div className="app__content">
-            <Header onSignUpClick={onSignUpClick} onLoginClick={onLoginClick} />
+            <Header
+              onSignUpClick={onSignUpClick}
+              onLoginClick={onLoginClick}
+              isLoggedIn={isLoggedIn}
+            />
             <Routes>
               <Route
                 path="/"
@@ -75,10 +91,13 @@ function App() {
                     onUploadImageClick={onUploadImageClick}
                     onSignUpClick={onSignUpClick}
                     onLoginClick={onLoginClick}
+                    onSavePaletteClick={onSavePaletteClick}
+                    isLoggedIn={isLoggedIn}
                   />
                 }
               />
               <Route path="/browse-palettes" element={<BrowsePalettes />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
             <Footer />
           </div>
@@ -92,6 +111,14 @@ function App() {
           />
           <ProvideImageModal
             isOpen={activeModal === "upload-image"}
+            handleClose={handleClose}
+          />
+          <SavePaletteModal
+            isOpen={activeModal === "save-palette"}
+            handleClose={handleClose}
+          />
+          <GeneratedPaletteModal
+            isOpen={activeModal === "generated-palette"}
             handleClose={handleClose}
           />
         </CurrentBackgroundPreference.Provider>

@@ -75,3 +75,35 @@
   margin: 0;
   color: #398b69;
 }
+
+@media screen and (max-width: 375px) {
+  .generate-card {
+    margin: 0 0 20px;
+  }
+  .generate-card__content {
+    padding: 18px 15px;
+    width: 280px;
+    height: 355px;
+    overflow: hidden;
+  }
+  .generate-card__title {
+    margin: 0 0 20px;
+    font-size: 24px;
+    line-height: 24px;
+  }
+  .generate-card__subtitle {
+    font-size: 14px;
+  }
+  .generate-card__image {
+    position: absolute;
+    top: 65px;
+    left: 16px;
+    width: 100%;
+  }
+  .generate-card__palette {
+    margin: 0 0 10px;
+    width: 100%;
+    height: 75%;
+    max-height: 345px;
+  }
+}

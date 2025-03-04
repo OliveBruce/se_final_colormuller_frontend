@@ -83,13 +83,13 @@
   .generate-card__content {
     padding: 18px 15px;
     width: 280px;
-    height: 355px;
+    height: 375px;
     overflow: hidden;
   }
   .generate-card__title {
     margin: 0 0 20px;
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 20px;
   }
   .generate-card__subtitle {
     font-size: 14px;

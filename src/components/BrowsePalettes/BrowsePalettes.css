@@ -23,7 +23,8 @@
 }
 
 .browse-palettes__palettes {
-  margin: 20px;
+  margin: 20px auto;
+  padding: 20px;
   border-radius: 16px;
 }
 
@@ -36,11 +37,27 @@
 }
 
 .browse-palettes__palette-list {
-  padding: 35px 0;
+  padding: 10px 0;
   display: flex;
   flex-wrap: wrap;
   gap: 25px;
   justify-content: center;
+}
+
+.browse-palettes__show-more {
+  display: block;
+  margin: 0px auto;
+  padding: 10px;
+  width: 225px;
+  border: 2px solid #fff;
+  border-radius: 100px;
+  background-color: #3aab7c;
+  transition: all 0.2s;
+  color: #fff;
+}
+
+.browse-palettes__show-more:hover {
+  background-color: #38df9a;
 }
 
 @media screen and (max-width: 375px) {
@@ -54,10 +71,10 @@
     line-height: 30px;
   }
   .browse-palettes__palettes {
-    margin: 20px;
+    margin: 20px 5px;
     border-radius: 16px;
   }
   .browse-palettes__palette-list {
-    padding: 15px 0;
+    padding: 15px;
   }
 }

@@ -62,12 +62,23 @@ function Profile({ isLoggedIn }) {
             </div>
           </div>
         </div>
-        <div className="profile__saved-palettes">
+        <div
+          className={
+            "profile__saved-palettes" +
+            (currentBGTheme === "light"
+              ? " profile__saved-palettes--light"
+              : " profile__saved-palettes--dark")
+          }
+        >
           <label
             htmlFor="my-palettes"
             className={
               "profile__tab-btn profile__tab-btn-my-palettes" +
-              (isCheckedMyPalettes ? " profile__tab-btn--active" : "")
+              (isCheckedMyPalettes
+                ? currentBGTheme === "light"
+                  ? " profile__tab-btn--light"
+                  : " profile__tab-btn--dark"
+                : "")
             }
           >
             <input
@@ -84,7 +95,11 @@ function Profile({ isLoggedIn }) {
             htmlFor="saved-palettes"
             className={
               "profile__tab-btn profile__tab-btn-saved-palettes" +
-              (isCheckedSavedPalettes ? " profile__tab-btn--active" : "")
+              (isCheckedSavedPalettes
+                ? currentBGTheme === "light"
+                  ? " profile__tab-btn--light"
+                  : " profile__tab-btn--dark"
+                : "")
             }
           >
             <input

@@ -9,6 +9,8 @@ function Main({
   onSignUpClick,
   onLoginClick,
   onSavePaletteClick,
+  onGeneratePaletteClick,
+  onRandomPhotoClick,
   isLoggedIn,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
@@ -27,7 +29,8 @@ function Main({
           onSignUpClick={onSignUpClick}
           onUploadImageClick={onUploadImageClick}
           currentBGTheme={currentBGTheme}
-          onSavePaletteClick={onSavePaletteClick}
+          onGeneratePaletteClick={onGeneratePaletteClick}
+          onRandomPhotoClick={onRandomPhotoClick}
         />
         <MainBrowseSection
           onLoginClick={onLoginClick}

@@ -1,12 +1,41 @@
 import "./GeneratedPaletteModal.css";
-import close from "../../assets/close.svg";
+import close_light from "../../assets/close.svg";
+import close_dark from "../../assets/close_dark.svg";
 import PaletteColor from "../PaletteColor/PaletteColor";
-import rgbHex from "rgb-hex";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import { getRandomPalette, filterPalette } from "../../utils/ColorMindApi";
+import Preloader from "../Preloader/Preloader";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 
-function GeneratedPaletteModal({ isOpen, handleClose }) {
+function GeneratedPaletteModal({
+  isOpen,
+  handleClose,
+  isLoggedIn,
+  onSavePaletteClick,
+}) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
+  const [palette, setPalette] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPalette = async () => {
+      setLoading(true);
+      try {
+        const palette = await getRandomPalette();
+        const filteredPalette = filterPalette(palette.result);
+        setPalette(filteredPalette);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (isOpen) {
+      fetchPalette();
+    }
+  }, [isOpen]);
+
   return (
     <div className={`generated-card-modal ${isOpen && "modal__opened"}`}>
       <div
@@ -18,23 +47,34 @@ function GeneratedPaletteModal({ isOpen, handleClose }) {
         }
       >
         <div className="generated-card-modal__palette">
-          <PaletteColor color="#E1E6EC" colorText="#E1E6EC" />
-          <PaletteColor color="#FBC301" colorText="#FBC301" />
-          <PaletteColor color="#7A4201" colorText="#7A4201" />
-          <PaletteColor color="#576872" colorText="#576872" />
-          <PaletteColor color="#252A2E" colorText="#252A2E" />
+          {loading ? (
+            <Preloader currentBGTheme={currentBGTheme} />
+          ) : palette && palette.length > 0 ? (
+            palette.map((color, index) => (
+              <PaletteColor key={index} color={color} colorText={color} />
+            ))
+          ) : (
+            <div>Nothing Found</div>
+          )}
         </div>
-        <img
-          src="https://plus.unsplash.com/premium_photo-1736165168647-e216dcd23720?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-          className="generated-card-modal__image"
-        />
+        {!loading ? (
+          <button
+            onClick={onSavePaletteClick}
+            type="button"
+            className="generated-card-modal__save"
+          >
+            Save Palette
+          </button>
+        ) : (
+          ""
+        )}
+
         <button onClick={handleClose} type="button" className="modal__close">
-          <img
-            src={close}
-            alt="close"
-            className="generated-card-modal__close-btn"
-          />
+          {currentBGTheme === "light" ? (
+            <img src={close_dark} alt="close" className="modal__close-btn" />
+          ) : (
+            <img src={close_light} alt="close" className="modal__close-btn" />
+          )}
         </button>
       </div>
     </div>

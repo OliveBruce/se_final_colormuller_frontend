@@ -11,6 +11,7 @@ export const defaultPalettes = [
       { c_id: 4, color: "#00FFFF" },
     ],
     creator: "Olivia Bruce",
+    likes: "",
   },
   {
     _id: 1,
@@ -25,6 +26,7 @@ export const defaultPalettes = [
       { c_id: 4, color: "rgb(190, 127, 67)" },
     ],
     creator: "Olivia Bruce",
+    likes: "",
   },
   {
     _id: 2,
@@ -39,6 +41,7 @@ export const defaultPalettes = [
       { c_id: 4, color: "rgb(144, 135, 126" },
     ],
     creator: "Olivia Bruce",
+    likes: "",
   },
   {
     _id: 3,
@@ -52,6 +55,7 @@ export const defaultPalettes = [
       { c_id: 4, color: "#00FFFF" },
     ],
     creator: "Olivia Bruce",
+    likes: "",
   },
   {
     _id: 4,
@@ -65,6 +69,7 @@ export const defaultPalettes = [
       { c_id: 4, color: "#00FFFF" },
     ],
     creator: "Olivia Bruce",
+    likes: "",
   },
   {
     _id: 5,
@@ -78,10 +83,11 @@ export const defaultPalettes = [
       { c_id: 4, color: "#00FFFF" },
     ],
     creator: "Olivia Bruce",
+    likes: "",
   },
   {
     _id: 6,
-    title: "Palette 5",
+    title: "Palette 7",
     image: "",
     colors: [
       { c_id: 0, color: "#FF0000" },
@@ -91,5 +97,6 @@ export const defaultPalettes = [
       { c_id: 4, color: "#00FFFF" },
     ],
     creator: "Olivia Bruce",
+    likes: "",
   },
 ];

@@ -2,12 +2,17 @@ import GenerateCard from "../GenerateCard/GenerateCard";
 import PaletteColor from "../PaletteColor/PaletteColor";
 import upload_photo from "../../assets/uploadphoto.png";
 
-function GenerateCardUploadPhoto({ onUploadImageClick, currentBGTheme }) {
+function GenerateCardUploadPhoto({
+  onUploadImageClick,
+  currentBGTheme,
+  onImageUpload,
+}) {
   return (
     <GenerateCard
       title="UPLOAD PHOTO"
       onGenerateClick={onUploadImageClick}
       currentBGTheme={currentBGTheme}
+      onImageUpload={onImageUpload}
     >
       <p className="generate-card__subtitle">& GET COLOR PALETTE</p>
       <div className="generate-card__palette generate-card__palette-with-image">

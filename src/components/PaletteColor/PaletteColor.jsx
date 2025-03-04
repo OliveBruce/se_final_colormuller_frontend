@@ -8,11 +8,11 @@ function PaletteColor({ color, colorText }) {
       style={{ backgroundColor: `${color}` }}
     >
       {isHex ? (
-        <p className="generate-card__color-name">{colorText}</p>
+        <p className="generate-card__color-name">{colorText.toUpperCase()}</p>
       ) : (
         <p className="generate-card__color-name">
           {"#"}
-          {colorText}
+          {colorText.toUpperCase()}
         </p>
       )}
     </div>

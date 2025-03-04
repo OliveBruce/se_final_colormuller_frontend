@@ -2,12 +2,16 @@ import GenerateCard from "../GenerateCard/GenerateCard";
 import PaletteColor from "../PaletteColor/PaletteColor";
 import random_photo from "../../assets/randomphoto.png";
 
-function GenerateCardRandomPhoto({ currentBGTheme, onSavePaletteClick }) {
+function GenerateCardRandomPhoto({
+  currentBGTheme,
+  onSavePaletteClick,
+  onRandomPhotoClick,
+}) {
   return (
     <GenerateCard
       title="RANDOM PHOTO"
       currentBGTheme={currentBGTheme}
-      onGenerateClick={onSavePaletteClick}
+      onGenerateClick={onRandomPhotoClick}
     >
       <p className="generate-card__subtitle">& COLOR PALETTE</p>
       <div className="generate-card__palette generate-card__palette-with-image">

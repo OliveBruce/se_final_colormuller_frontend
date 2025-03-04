@@ -8,7 +8,13 @@ function ModalWithForm({
   buttonText,
   redirectButton,
   children,
+  handleSubmit,
 }) {
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(e);
+  };
+
   return (
     <div className={`modal ${isOpen && "modal__opened"}`}>
       <div className="modal__content">
@@ -16,7 +22,7 @@ function ModalWithForm({
         <button onClick={handleClose} type="button" className="modal__close">
           <img src={close} alt="close" className="modal__close-btn" />
         </button>
-        <form className="modal__form">
+        <form className="modal__form" onSubmit={onSubmit}>
           {children}
           <div className="modal__buttons-wrapper">
             <button type="submit" className="modal__submit">

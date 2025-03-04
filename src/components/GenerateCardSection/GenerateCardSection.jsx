@@ -9,6 +9,8 @@ function GenerateCardSection({
   onSignUpClick,
   currentBGTheme,
   onSavePaletteClick,
+  onGeneratePaletteClick,
+  onRandomPhotoClick,
 }) {
   return (
     <div
@@ -49,14 +51,15 @@ function GenerateCardSection({
         <div className="generate-card-section__cards">
           <GenerateCardRandomPhoto
             currentBGTheme={currentBGTheme}
-            onSavePaletteClick={onSavePaletteClick}
+            onRandomPhotoClick={onRandomPhotoClick}
           />
           <GenerateCardPalette
-            onSignUpClick={onSignUpClick}
+            onGeneratePaletteClick={onGeneratePaletteClick}
             currentBGTheme={currentBGTheme}
           />
           <GenerateCardUploadPhoto
             onUploadImageClick={onUploadImageClick}
+            onImageUpload={onRandomPhotoClick}
             currentBGTheme={currentBGTheme}
           />
         </div>

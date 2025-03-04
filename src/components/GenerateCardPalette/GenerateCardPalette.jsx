@@ -1,19 +1,20 @@
+import { useState, useEffect } from "react";
 import GenerateCard from "../GenerateCard/GenerateCard";
 import PaletteColor from "../PaletteColor/PaletteColor";
 
-function GenerateCardPalette({ onSignUpClick, currentBGTheme }) {
+function GenerateCardPalette({ onGeneratePaletteClick, currentBGTheme }) {
   return (
     <GenerateCard
       title="RANDOM COLOR PALETTE"
-      onGenerateClick={onSignUpClick}
+      onGenerateClick={onGeneratePaletteClick}
       currentBGTheme={currentBGTheme}
     >
       <div className="generate-card__palette">
-        <PaletteColor color="#F9F8F9" colorText="#F9F8F9" />
-        <PaletteColor color="#B1A9C5" colorText="#B1A9C5" />
-        <PaletteColor color="#48B5C2" colorText="#48B5C2" />
-        <PaletteColor color="#888389" colorText="#888389" />
-        <PaletteColor color="#2F9E5C" colorText="#2F9E5C" />
+        <PaletteColor color="#E1E6EC" colorText="#E1E6EC" />
+        <PaletteColor color="#FBC301" colorText="#FBC301" />
+        <PaletteColor color="#7A4201" colorText="#7A4201" />
+        <PaletteColor color="#576872" colorText="#576872" />
+        <PaletteColor color="#252A2E" colorText="#252A2E" />
       </div>
     </GenerateCard>
   );

@@ -73,6 +73,8 @@ function GeneratedPaletteFromPhotoModal({
       setPaletteTitle("");
       navigate(`/profile`);
     } else {
+      setIsSaving(false);
+      setPaletteTitle("");
       alert("You need to be logged in to like a palette.");
     }
     handleClose();

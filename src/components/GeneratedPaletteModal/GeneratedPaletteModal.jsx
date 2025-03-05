@@ -3,7 +3,7 @@ import close_light from "../../assets/close.svg";
 import close_dark from "../../assets/close_dark.svg";
 import PaletteColor from "../PaletteColor/PaletteColor";
 import { useContext, useState, useEffect } from "react";
-import { getRandomPalette, filterPalette } from "../../utils/ColorMindApi";
+import { getRandomPalette } from "../../utils/TheColorApi";
 import Preloader from "../Preloader/Preloader";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 import { savePalette } from "../../utils/api";
@@ -27,11 +27,8 @@ function GeneratedPaletteModal({
     const fetchPalette = async () => {
       setLoading(true);
       try {
-        console.log("Fetching palette...");
         const palette = await getRandomPalette();
-        console.log("Palette fetched:", palette);
-        const filteredPalette = filterPalette(palette.result);
-        setPalette(filteredPalette);
+        setPalette(palette);
       } catch (error) {
         console.error(error);
       } finally {

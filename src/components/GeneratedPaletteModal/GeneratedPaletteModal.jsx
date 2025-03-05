@@ -27,7 +27,9 @@ function GeneratedPaletteModal({
     const fetchPalette = async () => {
       setLoading(true);
       try {
+        console.log("Fetching palette...");
         const palette = await getRandomPalette();
+        console.log("Palette fetched:", palette);
         const filteredPalette = filterPalette(palette.result);
         setPalette(filteredPalette);
       } catch (error) {

@@ -1,14 +1,15 @@
 import { request } from "./api.js";
 import { rgbToHex } from "./color.js";
 
-export const getRandomPalette = () => {
-  return request("http://colormind.io/api/", {
+export const getRandomPalette = async () => {
+  const response = await fetch("https://colormind.io/api/", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: '{"model":"default"}',
+    body: JSON.stringify({ model: "default" }),
   });
+  if (!response.ok) {
+    throw new Error("Failed to fetch palette");
+  }
+  return response.json();
 };
 
 export const filterPalette = (palette) => {

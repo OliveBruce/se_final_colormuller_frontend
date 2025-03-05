@@ -194,7 +194,7 @@ function App() {
           />
           <Routes>
             <Route
-              path={`${BASE_URL}/`}
+              path={`/`}
               element={
                 <Main
                   onUploadImageClick={onUploadImageClick}
@@ -208,7 +208,7 @@ function App() {
               }
             />
             <Route
-              path={`${BASE_URL}/browse-palettes`}
+              path={`/browse-palettes`}
               element={
                 <BrowsePalettes
                   palettes={palettes}
@@ -219,7 +219,7 @@ function App() {
               }
             />
             <Route
-              path={`${BASE_URL}/profile`}
+              path={`/profile`}
               element={
                 <Profile
                   isLoggedIn={isLoggedIn}

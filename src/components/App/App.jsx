@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 import { getPhotoUpload } from "../../utils/UnsplashApi";
 import { authorize, checkToken, updateProfileName } from "../../utils/auth";
-import { BASE_URL } from "../../utils/constants";
+import { getItems, likePalette, unlikePalette } from "../../utils/api";
 
 import Header from "../Header/Header";
 import SignUpModal from "../SignUpModal/SignUpModal";
@@ -16,7 +16,7 @@ import BrowsePalettes from "../BrowsePalettes/BrowsePalettes";
 import GeneratedPaletteModal from "../GeneratedPaletteModal/GeneratedPaletteModal";
 import Profile from "../Profile/Profile";
 import GeneratedPaletteFromPhotoModal from "../GeneratedPaletteFromPhotoModal/GeneratedPaletteFromPhotoModal";
-import { getItems, likePalette, unlikePalette } from "../../utils/api";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -221,13 +221,15 @@ function App() {
             <Route
               path={`/profile`}
               element={
-                <Profile
-                  isLoggedIn={isLoggedIn}
-                  userName={userName}
-                  onLogoutClick={handleLogout}
-                  onUpdateProfileName={handleUpdateProfileName}
-                  handleUnlikePalette={handleUnlikePalette}
-                />
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    isLoggedIn={isLoggedIn}
+                    userName={userName}
+                    onLogoutClick={handleLogout}
+                    onUpdateProfileName={handleUpdateProfileName}
+                    handleUnlikePalette={handleUnlikePalette}
+                  />
+                </ProtectedRoute>
               }
             />
           </Routes>

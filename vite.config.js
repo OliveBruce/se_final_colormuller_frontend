@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/se_final_colormuller_frontend/",
   plugins: [react()],
+  base: "/se_final_colormuller_frontend/",
   server: {
     port: 3000,
   },

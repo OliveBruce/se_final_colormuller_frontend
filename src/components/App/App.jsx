@@ -65,7 +65,7 @@ function App() {
       setIsLoggedIn(true);
       fetchUser();
       handleClose();
-      navigate(`${BASE_URL}/profile`);
+      navigate(`/profile`);
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -77,7 +77,7 @@ function App() {
       setIsLoggedIn(true);
       setUserName(response.userName);
       handleClose();
-      navigate(`${BASE_URL}/profile`);
+      navigate(`/profile`);
     } catch (error) {
       console.error("Sign-up failed:", error);
     }
@@ -92,7 +92,7 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName("");
-    navigate(`${BASE_URL}/`);
+    navigate(`/`);
   };
 
   const handleUpdateProfileName = async (newName) => {

@@ -60,7 +60,7 @@ function GeneratedPaletteModal({
         creator: userName,
       };
       await savePalette(newPalette);
-      navigate(`${BASE_URL}/profile`);
+      navigate(`/profile`);
     } else {
       alert("You need to be logged in to like a palette.");
     }

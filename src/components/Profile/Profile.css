@@ -115,7 +115,7 @@
 }
 
 .profile__tab-btn {
-  position: relative; /* Ensure the parent container is relative */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -182,7 +182,7 @@
   row-gap: 25px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1260px) {
   .profile__container {
     padding: 40px;
   }
@@ -199,7 +199,7 @@
   .profile__user-info {
     align-items: flex-start;
     bottom: 10px;
-    right: 5px;
+    left: 130px;
   }
   .profile__tab-btn {
     width: 132px;
@@ -216,6 +216,63 @@
   .profile__tab-text {
     top: 15%;
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 1260px) {
+  .profile__user-info {
+    width: 150px;
+    left: 160px;
+    gap: 15px;
+  }
+  .profile__bg {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .profile__container {
+    padding: 15px;
+  }
+  .profile__header {
+    margin: 0 0 65px;
+    width: 245px;
+  }
+  .profile__header-content {
+    height: 100%;
+  }
+  .profile__avatar {
+    width: 115px;
+    height: 115px;
+  }
+  .profile__bg {
+    width: 200px;
+    height: 100px;
+  }
+  .profile__user-info {
+    flex-direction: column;
+    align-items: flex-start;
+    top: 40px;
+    left: 120px;
+  }
+  .profile__tab-btn {
+    width: 100px;
+    height: 50px;
+  }
+  .profile__tab-btn-my-palettes {
+    position: absolute;
+    top: -50px;
+    left: 50px;
+    width: 100px;
+  }
+  .profile__tab-btn-saved-palettes {
+    position: absolute;
+    top: -50px;
+    left: 155px;
+  }
+  .profile__tab-text {
+    top: 15%;
+    font-size: 12px;
   }
 }
 
@@ -243,24 +300,5 @@
     align-items: flex-start;
     bottom: 10px;
     right: 10px;
-  }
-  .profile__tab-btn {
-    width: 100px;
-    height: 50px;
-  }
-  .profile__tab-btn-my-palettes {
-    position: absolute;
-    top: -50px;
-    left: 50px;
-    width: 100px;
-  }
-  .profile__tab-btn-saved-palettes {
-    position: absolute;
-    top: -50px;
-    left: 155px;
-  }
-  .profile__tab-text {
-    top: 15%;
-    font-size: 12px;
   }
 }

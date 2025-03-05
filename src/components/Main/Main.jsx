@@ -12,6 +12,7 @@ function Main({
   onGeneratePaletteClick,
   onRandomPhotoClick,
   isLoggedIn,
+  palettes,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
 
@@ -37,6 +38,7 @@ function Main({
           onUploadImageClick={onUploadImageClick}
           currentBGTheme={currentBGTheme}
           isLoggedIn={isLoggedIn}
+          palettes={palettes}
         />
       </div>
     </main>

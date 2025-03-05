@@ -49,9 +49,27 @@
 
 .generate-card-section__cards {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (max-width: 680px) {
+  .generate-card-section__logo {
+    width: 110px;
+  }
+  .generate-card-section__description {
+    margin: 10px 36px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .generate-card-section__cards-section-header {
+    margin: 0 auto 15px;
+    font-size: 24px;
+    line-height: 28px;
+  }
 }
 
 @media screen and (max-width: 375px) {

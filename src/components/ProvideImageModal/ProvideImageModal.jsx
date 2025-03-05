@@ -29,8 +29,8 @@ function ProvideImageModal({ isOpen, handleClose, handleSubmitPhoto }) {
       handleSubmit={handleSubmit}
     >
       <p className="provide-image__description">
-        Copy an Image URL from Unsplash and paste it here to generate a palette
-        from an Image of your choosing.
+        Copy an Image URL from Unsplash(the URL, not the Image Address) and
+        paste it here to generate a palette from an Image of your choosing.
       </p>
       <input
         type="url"

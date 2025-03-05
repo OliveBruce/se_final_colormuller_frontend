@@ -1,12 +1,26 @@
+import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { authorize } from "../../utils/auth";
 
-function LoginModal({ isOpen, handleClose }) {
+function LoginModal({ isOpen, handleClose, handleSubmit }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <ModalWithForm
       title="Login"
       buttonText="Submit"
       isOpen={isOpen}
       handleClose={handleClose}
+      handleSubmit={handleSubmit}
       redirectButton={
         <button type="button" className="modal__redirect-btn">
           or Sign Up
@@ -19,6 +33,8 @@ function LoginModal({ isOpen, handleClose }) {
         id="email-login"
         placeholder="Email"
         autoComplete="off"
+        value={email}
+        onChange={handleEmailChange}
       />
       <input
         type="password"
@@ -26,6 +42,8 @@ function LoginModal({ isOpen, handleClose }) {
         id="password-login"
         placeholder="Password"
         autoComplete="current-password"
+        value={password}
+        onChange={handlePasswordChange}
       />
     </ModalWithForm>
   );

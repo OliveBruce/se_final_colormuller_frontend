@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 import { getPhotoUpload } from "../../utils/UnsplashApi";
+import { authorize, checkToken } from "../../utils/auth";
 
 import Header from "../Header/Header";
 import SignUpModal from "../SignUpModal/SignUpModal";
@@ -11,16 +12,19 @@ import ProvideImageModal from "../ProvideImageModal/ProvideImageModal";
 import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
 import BrowsePalettes from "../BrowsePalettes/BrowsePalettes";
-import SavePaletteModal from "../SavePaletteModal/SavePaletteModal";
 import GeneratedPaletteModal from "../GeneratedPaletteModal/GeneratedPaletteModal";
 import Profile from "../Profile/Profile";
 import GeneratedPaletteFromPhotoModal from "../GeneratedPaletteFromPhotoModal/GeneratedPaletteFromPhotoModal";
+import { getItems } from "../../utils/api";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [currentBGTheme, setCurrentBGTheme] = useState("dark");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
   const [photoDetails, setPhotoDetails] = useState(null);
+  const [palettes, setPalettes] = useState([]);
+  const navigate = useNavigate();
 
   const onSignUpClick = () => {
     setActiveModal("signup");
@@ -57,6 +61,27 @@ function App() {
     }
   };
 
+  const handleLogin = async (e) => {
+    try {
+      const response = await authorize(email, password);
+      setIsLoggedIn(true);
+      fetchUser();
+      handleClose();
+      navigate("/profile");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+  const fetchUser = async () => {
+    try {
+      const response = await checkToken();
+      setUserName(response.data.name);
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    }
+  };
+
   const handleClose = () => {
     setActiveModal("");
   };
@@ -69,6 +94,19 @@ function App() {
       setCurrentBGTheme("dark");
     }
   };
+
+  useEffect(() => {
+    const fetchPalettes = async () => {
+      try {
+        const palettesList = await getItems();
+        setPalettes(palettesList);
+      } catch (error) {
+        console.error("Error fetching palettes:", error);
+      }
+    };
+
+    fetchPalettes();
+  }, []);
 
   useEffect(() => {
     if (!activeModal) return;
@@ -87,73 +125,76 @@ function App() {
   }, [activeModal]);
 
   return (
-    <BrowserRouter>
-      <div className="app">
-        <CurrentBackgroundPreference.Provider
-          value={{ currentBGTheme, handleToggleSwitchChange }}
-        >
-          <div className="app__content">
-            <Header
-              onSignUpClick={onSignUpClick}
-              onLoginClick={onLoginClick}
-              isLoggedIn={isLoggedIn}
-            />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Main
-                    onUploadImageClick={onUploadImageClick}
-                    onSignUpClick={onSignUpClick}
-                    onLoginClick={onLoginClick}
-                    onSavePaletteClick={onSavePaletteClick}
-                    onGeneratePaletteClick={onGeneratePaletteClick}
-                    onRandomPhotoClick={onRandomPhotoClick}
-                    isLoggedIn={isLoggedIn}
-                  />
-                }
-              />
-              <Route path="/browse-palettes" element={<BrowsePalettes />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-            <Footer />
-          </div>
-          <SignUpModal
-            isOpen={activeModal === "signup"}
-            handleClose={handleClose}
-          />
-          <LoginModal
-            isOpen={activeModal === "login"}
-            handleClose={handleClose}
-          />
-          <ProvideImageModal
-            isOpen={activeModal === "upload-image"}
-            handleClose={handleClose}
-            handleSubmitPhoto={handleSubmitPhoto}
-          />
-          <SavePaletteModal
-            isOpen={activeModal === "save-palette"}
-            handleClose={handleClose}
-            isLoggedIn={isLoggedIn}
-            onLoginClick={onLoginClick}
+    <div className="app">
+      <CurrentBackgroundPreference.Provider
+        value={{ currentBGTheme, handleToggleSwitchChange }}
+      >
+        <div className="app__content">
+          <Header
             onSignUpClick={onSignUpClick}
-          />
-          <GeneratedPaletteModal
-            isOpen={activeModal === "generated-palette"}
-            handleClose={handleClose}
+            onLoginClick={onLoginClick}
             isLoggedIn={isLoggedIn}
-            onSavePaletteClick={onSavePaletteClick}
           />
-          <GeneratedPaletteFromPhotoModal
-            isOpen={activeModal === "generated-palette-from-photo"}
-            handleClose={handleClose}
-            photoDetails={photoDetails}
-            isLoggedIn={isLoggedIn}
-            onSavePaletteClick={onSavePaletteClick}
-          />
-        </CurrentBackgroundPreference.Provider>
-      </div>
-    </BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  onUploadImageClick={onUploadImageClick}
+                  onSignUpClick={onSignUpClick}
+                  onLoginClick={onLoginClick}
+                  onSavePaletteClick={onSavePaletteClick}
+                  onGeneratePaletteClick={onGeneratePaletteClick}
+                  onRandomPhotoClick={onRandomPhotoClick}
+                  isLoggedIn={isLoggedIn}
+                  palettes={palettes}
+                />
+              }
+            />
+            <Route
+              path="/browse-palettes"
+              element={<BrowsePalettes palettes={palettes} />}
+            />
+            <Route
+              path="/profile"
+              element={<Profile isLoggedIn={isLoggedIn} userName={userName} />}
+            />
+          </Routes>
+          <Footer />
+        </div>
+        <SignUpModal
+          isOpen={activeModal === "signup"}
+          handleClose={handleClose}
+        />
+        <LoginModal
+          isOpen={activeModal === "login"}
+          handleClose={handleClose}
+          handleSubmit={handleLogin}
+        />
+        <ProvideImageModal
+          isOpen={activeModal === "upload-image"}
+          handleClose={handleClose}
+          handleSubmitPhoto={handleSubmitPhoto}
+        />
+        <GeneratedPaletteModal
+          isOpen={activeModal === "generated-palette"}
+          handleClose={handleClose}
+          isLoggedIn={isLoggedIn}
+          onSavePaletteClick={onSavePaletteClick}
+          userName={userName}
+          palettes={palettes}
+        />
+        <GeneratedPaletteFromPhotoModal
+          isOpen={activeModal === "generated-palette-from-photo"}
+          handleClose={handleClose}
+          photoDetails={photoDetails}
+          isLoggedIn={isLoggedIn}
+          onSavePaletteClick={onSavePaletteClick}
+          userName={userName}
+          palettes={palettes}
+        />
+      </CurrentBackgroundPreference.Provider>
+    </div>
   );
 }
 

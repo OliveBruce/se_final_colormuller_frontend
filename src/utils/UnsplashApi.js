@@ -8,7 +8,6 @@ export const getRandomPhoto = () => {
   return api.photos
     .getRandom({})
     .then((result) => {
-      console.log(result);
       return result.response;
     })
     .catch(() => {

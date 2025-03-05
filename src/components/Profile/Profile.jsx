@@ -1,26 +1,39 @@
 import "./Profile.css";
 import PaletteCard from "../PaletteCard/PaletteCard";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 import { defaultPalettes } from "../../utils/constants";
+import { getUserPalettes } from "../../utils/api";
 
-function Profile({ isLoggedIn }) {
+function Profile({ isLoggedIn, userName }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [isCheckedMyPalettes, setIsCheckedMyPalettes] = useState(true);
   const [isCheckedSavedPalettes, setIsCheckedSavedPalettes] = useState(false);
+  const [userPalettes, setUserPalettes] = useState([]);
+
+  useEffect(() => {
+    const fetchUserPalettes = async () => {
+      if (isLoggedIn) {
+        try {
+          const palettes = await getUserPalettes(userName);
+          setUserPalettes(palettes);
+        } catch (error) {
+          console.error("Error fetching user palettes:", error);
+        }
+      }
+    };
+
+    fetchUserPalettes();
+  }, [isLoggedIn, userName]);
 
   const handleChangeSavedPalettes = () => {
-    setIsCheckedSavedPalettes(!isCheckedSavedPalettes);
-    if (isCheckedMyPalettes) {
-      setIsCheckedMyPalettes(!isCheckedMyPalettes);
-    }
+    setIsCheckedSavedPalettes(true);
+    setIsCheckedMyPalettes(false);
   };
 
   const handleChangeMyPalettes = () => {
-    setIsCheckedMyPalettes(!isCheckedMyPalettes);
-    if (isCheckedSavedPalettes) {
-      setIsCheckedSavedPalettes(!isCheckedSavedPalettes);
-    }
+    setIsCheckedMyPalettes(true);
+    setIsCheckedSavedPalettes(false);
   };
 
   return (
@@ -76,8 +89,8 @@ function Profile({ isLoggedIn }) {
               "profile__tab-btn profile__tab-btn-my-palettes" +
               (isCheckedMyPalettes
                 ? currentBGTheme === "light"
-                  ? " profile__tab-btn--light"
-                  : " profile__tab-btn--dark"
+                  ? " profile__tab-btn--light profile__tab-btn--active"
+                  : " profile__tab-btn--dark profile__tab-btn--active"
                 : "")
             }
           >
@@ -97,8 +110,8 @@ function Profile({ isLoggedIn }) {
               "profile__tab-btn profile__tab-btn-saved-palettes" +
               (isCheckedSavedPalettes
                 ? currentBGTheme === "light"
-                  ? " profile__tab-btn--light"
-                  : " profile__tab-btn--dark"
+                  ? " profile__tab-btn--light profile__tab-btn--active"
+                  : " profile__tab-btn--dark profile__tab-btn--active"
                 : "")
             }
           >
@@ -110,37 +123,33 @@ function Profile({ isLoggedIn }) {
               value="saved-palettes"
               id="saved-palettes"
             />
-            <span className="profile__tab-text">Saved Palettes</span>
+            <span className="profile__tab-text">Liked Palettes</span>
           </label>
           {isCheckedMyPalettes ? (
             <ul className="profile__palette-list">
-              {defaultPalettes.slice(0, 3).map((palette) => {
-                return (
-                  <PaletteCard
-                    key={palette._id}
-                    paletteImage={palette.image}
-                    paletteColors={palette.colors}
-                    paletteTitle={palette.title}
-                    creator={palette.creator}
-                    currentBGTheme={currentBGTheme}
-                  />
-                );
-              })}
+              {userPalettes.map((palette) => (
+                <PaletteCard
+                  key={palette._id}
+                  paletteImage={palette.image}
+                  paletteColors={palette.colors}
+                  paletteTitle={palette.title}
+                  creator={palette.creator}
+                  currentBGTheme={currentBGTheme}
+                />
+              ))}
             </ul>
           ) : (
             <ul className="profile__palette-list">
-              {defaultPalettes.slice(3, 6).map((palette) => {
-                return (
-                  <PaletteCard
-                    key={palette._id}
-                    paletteImage={palette.image}
-                    paletteColors={palette.colors}
-                    paletteTitle={palette.title}
-                    creator={palette.creator}
-                    currentBGTheme={currentBGTheme}
-                  />
-                );
-              })}
+              {defaultPalettes.slice(3, 6).map((palette) => (
+                <PaletteCard
+                  key={palette._id}
+                  paletteImage={palette.image}
+                  paletteColors={palette.colors}
+                  paletteTitle={palette.title}
+                  creator={palette.creator}
+                  currentBGTheme={currentBGTheme}
+                />
+              ))}
             </ul>
           )}
         </div>

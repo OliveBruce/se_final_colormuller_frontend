@@ -9,6 +9,7 @@ function MainBrowseSection({
   onUploadImageClick,
   currentBGTheme,
   isLoggedIn,
+  palettes,
 }) {
   return (
     <div
@@ -34,7 +35,7 @@ function MainBrowseSection({
       )}
 
       <ul className="main-browse-section__list">
-        {defaultPalettes.slice(0, 3).map((palette) => {
+        {palettes.slice(0, 3).map((palette) => {
           return (
             <PaletteCard
               key={palette._id}

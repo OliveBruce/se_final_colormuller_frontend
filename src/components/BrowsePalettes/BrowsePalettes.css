@@ -60,7 +60,14 @@
   background-color: #38df9a;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 605px) {
+  .browse-palettes__title {
+    font-size: 30px;
+    line-height: 34px;
+  }
+}
+
+@media screen and (max-width: 400px) {
   .browse-palettes {
     margin: 0 auto;
     padding: 10px;

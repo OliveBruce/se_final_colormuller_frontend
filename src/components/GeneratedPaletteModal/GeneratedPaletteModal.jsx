@@ -6,16 +6,21 @@ import { useContext, useState, useEffect } from "react";
 import { getRandomPalette, filterPalette } from "../../utils/ColorMindApi";
 import Preloader from "../Preloader/Preloader";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
+import { savePalette } from "../../utils/api";
 
 function GeneratedPaletteModal({
   isOpen,
   handleClose,
   isLoggedIn,
   onSavePaletteClick,
+  userName,
+  palettes,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [palette, setPalette] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setIsSaving] = useState(false);
+  const [paletteTitle, setPaletteTitle] = useState("");
 
   useEffect(() => {
     const fetchPalette = async () => {
@@ -35,6 +40,27 @@ function GeneratedPaletteModal({
       fetchPalette();
     }
   }, [isOpen]);
+
+  const handleSavePaletteClick = async () => {
+    return setIsSaving(true);
+  };
+
+  const handleInputChange = (e) => {
+    setPaletteTitle(e.target.value);
+  };
+
+  const handleSavePalette = async () => {
+    const idNumb = palettes.length + 1;
+    const newPalette = {
+      _id: idNumb,
+      title: paletteTitle,
+      colors: palette.map((color) => ({ color })),
+      creator: userName,
+    };
+    console.log(newPalette);
+    await savePalette(newPalette);
+    handleClose();
+  };
 
   return (
     <div className={`generated-card-modal ${isOpen && "modal__opened"}`}>
@@ -58,18 +84,45 @@ function GeneratedPaletteModal({
           )}
         </div>
         {!loading ? (
-          <button
-            onClick={onSavePaletteClick}
-            type="button"
-            className="generated-card-modal__save"
-          >
-            Save Palette
-          </button>
+          <>
+            {saving ? (
+              <form>
+                <input
+                  type="text"
+                  className="modal__input"
+                  id="palette-title"
+                  placeholder="Palette Title"
+                  autoComplete="off"
+                  value={paletteTitle}
+                  onChange={handleInputChange}
+                />
+                <button
+                  onClick={handleSavePalette}
+                  type="button"
+                  className="generated-card-modal__save"
+                >
+                  Save
+                </button>
+              </form>
+            ) : (
+              <button
+                onClick={handleSavePaletteClick}
+                type="button"
+                className="generated-card-modal__save"
+              >
+                Save Palette
+              </button>
+            )}
+          </>
         ) : (
           ""
         )}
 
-        <button onClick={handleClose} type="button" className="modal__close">
+        <button
+          onClick={handleClose}
+          type="button"
+          className="generated-card-modal__close-btn"
+        >
           {currentBGTheme === "light" ? (
             <img src={close_dark} alt="close" className="modal__close-btn" />
           ) : (

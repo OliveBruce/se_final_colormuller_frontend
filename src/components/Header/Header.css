@@ -84,6 +84,36 @@
   object-fit: cover;
 }
 
+@media screen and (max-width: 880px) {
+  .header__link {
+    margin: auto;
+  }
+  .header__user-container {
+    flex-wrap: wrap;
+    padding: 0 35px;
+    justify-content: center;
+    gap: 20px;
+  }
+  .header__user-btn-container {
+    flex-wrap: wrap;
+    padding: 0 35px;
+    justify-content: center;
+  }
+  .header__user-btn-avatar {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media screen and (max-width: 722px) {
+  .header__user-container {
+    flex-wrap: wrap;
+    padding: 0 35px;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
 @media screen and (max-width: 375px) {
   .header__link {
     margin: auto;

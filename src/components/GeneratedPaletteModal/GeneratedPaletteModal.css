@@ -36,8 +36,8 @@
 .generated-card-modal__close-btn {
   padding: 0;
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: 10px;
+  right: 10px;
   border: none;
   background-color: transparent;
 }
@@ -81,7 +81,7 @@
 
 .generated-card-modal__image-description {
   margin: 5px 0px;
-  font-size: 14px;
+  font-size: 10px;
   line-height: 20px;
   color: #757575;
 }
@@ -94,4 +94,64 @@
 .generated-card-modal__link:hover {
   text-decoration: none;
   color: #38df9a;
+}
+
+@media screen and (max-width: 600px) {
+  .generated-card-modal__container {
+    padding: 70px 20px 20px;
+    max-width: 400px;
+  }
+
+  .generated-card-modal__close-btn {
+    top: 10px;
+    right: 10px;
+  }
+
+  .generated-card-modal__palette {
+    width: 360px;
+    height: 450px;
+  }
+
+  .generated-card-modal__image {
+    height: 350px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .generated-card-modal__container {
+    padding: 70px 10px 20px;
+    max-width: 325px;
+  }
+
+  .generated-card-modal__close-btn {
+    width: 26px;
+    height: 26px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .generated-card-modal__palette {
+    width: 300px;
+    height: 350px;
+  }
+
+  .generated-card-modal__image {
+    height: 300px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .generated-card-modal__container {
+    padding: 70px 10px 20px;
+    max-width: 300px;
+  }
+
+  .generated-card-modal__palette {
+    width: 275px;
+    height: 300px;
+  }
+
+  .generated-card-modal__image {
+    height: 250px;
+  }
 }

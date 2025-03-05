@@ -12,11 +12,17 @@
   opacity: 0.8;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 550px) {
   .generate-card__color-name {
     max-width: 100%;
     writing-mode: vertical-lr;
     text-orientation: upright;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .generate-card__color-name {
     font-size: 8px;
   }
 }

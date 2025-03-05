@@ -4,13 +4,12 @@ import PaletteCard from "../PaletteCard/PaletteCard";
 import { useContext, useState } from "react";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 
-function BrowsePalettes() {
+function BrowsePalettes({ palettes }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [showNumber, setShowNumber] = useState(3);
 
   const showMore = () => {
     setShowNumber(showNumber + 3);
-    console.log(showNumber);
   };
 
   return (
@@ -32,7 +31,7 @@ function BrowsePalettes() {
         }
       >
         <ul className="browse-palettes__palette-list">
-          {defaultPalettes.slice(0, showNumber).map((palette) => {
+          {palettes.slice(0, showNumber).map((palette) => {
             return (
               <PaletteCard
                 key={palette._id}

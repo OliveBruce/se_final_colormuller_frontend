@@ -118,7 +118,7 @@ export function savePalette(palette) {
       creator: palette.creator,
       liked: "",
     };
-    palettes.push(newPalette); // Add the new palette to the palettes array
+    palettes.unshift(newPalette);
     resolve(newPalette);
   });
 }
@@ -129,6 +129,39 @@ export function getUserPalettes(userName) {
       (palette) => palette.creator === userName
     );
     resolve(userPalettes);
+  });
+}
+
+export function likePalette(paletteId) {
+  return new Promise((resolve, reject) => {
+    const palette = palettes.find((p) => p._id === paletteId);
+    if (palette) {
+      palette.liked = "liked";
+      resolve(palette);
+    } else {
+      reject(new Error("Palette not found"));
+    }
+  });
+}
+
+export function unlikePalette(paletteId) {
+  return new Promise((resolve, reject) => {
+    const palette = palettes.find((p) => p._id === paletteId);
+    if (palette) {
+      palette.liked = "";
+      resolve(palette);
+    } else {
+      reject(new Error("Palette not found"));
+    }
+  });
+}
+
+export function getLikedPalettes() {
+  return new Promise((resolve, reject) => {
+    const likedPalettes = palettes.filter(
+      (palette) => palette.liked === "liked"
+    );
+    resolve(likedPalettes);
   });
 }
 

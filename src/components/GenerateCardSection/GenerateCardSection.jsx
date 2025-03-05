@@ -6,9 +6,7 @@ import logo from "../../assets/colormuller.svg";
 
 function GenerateCardSection({
   onUploadImageClick,
-  onSignUpClick,
   currentBGTheme,
-  onSavePaletteClick,
   onGeneratePaletteClick,
   onRandomPhotoClick,
 }) {

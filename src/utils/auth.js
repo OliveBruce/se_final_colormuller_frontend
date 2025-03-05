@@ -11,3 +11,9 @@ export const checkToken = (token) => {
     });
   });
 };
+
+export const updateProfileName = (newName) => {
+  return new Promise((resolve, reject) => {
+    resolve({ name: newName });
+  });
+};

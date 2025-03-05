@@ -3,13 +3,28 @@ import PaletteCard from "../PaletteCard/PaletteCard";
 import { useContext, useState, useEffect } from "react";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 import { defaultPalettes } from "../../utils/constants";
-import { getUserPalettes } from "../../utils/api";
+import {
+  getUserPalettes,
+  getLikedPalettes,
+  likePalette,
+} from "../../utils/api";
 
-function Profile({ isLoggedIn, userName }) {
+function Profile({
+  isLoggedIn,
+  userName,
+  onLogoutClick,
+  onUpdateProfileName,
+  handleUnlikePalette,
+}) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [isCheckedMyPalettes, setIsCheckedMyPalettes] = useState(true);
   const [isCheckedSavedPalettes, setIsCheckedSavedPalettes] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newName, setNewName] = useState(userName);
   const [userPalettes, setUserPalettes] = useState([]);
+  const [likedPalettes, setLikedPalettes] = useState([]);
+  const [hasUserPalettes, setHasUserPalettes] = useState(false);
+  const [hasLikedpalettes, setHasLikedPalettes] = useState(false);
 
   useEffect(() => {
     const fetchUserPalettes = async () => {
@@ -17,6 +32,7 @@ function Profile({ isLoggedIn, userName }) {
         try {
           const palettes = await getUserPalettes(userName);
           setUserPalettes(palettes);
+          setHasUserPalettes(palettes.length > 0);
         } catch (error) {
           console.error("Error fetching user palettes:", error);
         }
@@ -26,6 +42,37 @@ function Profile({ isLoggedIn, userName }) {
     fetchUserPalettes();
   }, [isLoggedIn, userName]);
 
+  useEffect(() => {
+    const fetchLikedPalettes = async () => {
+      if (isLoggedIn) {
+        try {
+          const palettes = await getLikedPalettes();
+          setLikedPalettes(palettes);
+          setHasLikedPalettes(palettes.length > 0);
+        } catch (error) {
+          console.error("Error fetching liked palettes:", error);
+        }
+      }
+    };
+
+    if (isCheckedSavedPalettes) {
+      fetchLikedPalettes();
+    }
+  }, [isLoggedIn, isCheckedSavedPalettes]);
+
+  const handleLikePalette = async (paletteId) => {
+    try {
+      const updatedPalette = await likePalette(paletteId);
+      setUserPalettes((prevPalettes) =>
+        prevPalettes.map((palette) =>
+          palette._id === paletteId ? updatedPalette : palette
+        )
+      );
+    } catch (error) {
+      console.error("Failed to like palette:", error);
+    }
+  };
+
   const handleChangeSavedPalettes = () => {
     setIsCheckedSavedPalettes(true);
     setIsCheckedMyPalettes(false);
@@ -34,6 +81,34 @@ function Profile({ isLoggedIn, userName }) {
   const handleChangeMyPalettes = () => {
     setIsCheckedMyPalettes(true);
     setIsCheckedSavedPalettes(false);
+  };
+
+  const handleEditProfileClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleNameChange = (e) => {
+    setNewName(e.target.value);
+  };
+
+  const handleNameSubmit = (e) => {
+    e.preventDefault();
+    onUpdateProfileName(newName);
+    setUserPalettes((prevPalettes) =>
+      prevPalettes.map((palette) =>
+        palette.creator === userName
+          ? { ...palette, creator: newName }
+          : palette
+      )
+    );
+    setLikedPalettes((prevPalettes) =>
+      prevPalettes.map((palette) =>
+        palette.creator === userName
+          ? { ...palette, creator: newName }
+          : palette
+      )
+    );
+    setIsEditing(false);
   };
 
   return (
@@ -62,14 +137,36 @@ function Profile({ isLoggedIn, userName }) {
               alt="User avatar"
             />
             <div className="profile__user-info">
-              <h1 className="profile__username">Olivia Bruce</h1>
+              <h1 className="profile__username">{userName}</h1>
+              {isEditing ? (
+                <form onSubmit={handleNameSubmit}>
+                  <input
+                    type="text"
+                    className="modal__input profile__input"
+                    value={newName}
+                    onChange={handleNameChange}
+                  />
+                  <button
+                    type="submit"
+                    className="profile__button profile__update-name"
+                  >
+                    Update Name
+                  </button>
+                </form>
+              ) : (
+                <button
+                  type="button"
+                  className="profile__button profile__edit-profile"
+                  onClick={handleEditProfileClick}
+                >
+                  Edit Profile
+                </button>
+              )}
               <button
                 type="button"
-                className="profile__button profile__edit-profile"
+                className="profile__button profile__logout"
+                onClick={onLogoutClick}
               >
-                Edit Profile
-              </button>
-              <button type="button" className="profile__button profile__logout">
                 Logout
               </button>
             </div>
@@ -126,8 +223,28 @@ function Profile({ isLoggedIn, userName }) {
             <span className="profile__tab-text">Liked Palettes</span>
           </label>
           {isCheckedMyPalettes ? (
+            hasUserPalettes ? (
+              <ul className="profile__palette-list">
+                {userPalettes.map((palette) => (
+                  <PaletteCard
+                    key={palette._id}
+                    paletteImage={palette.image}
+                    paletteColors={palette.colors}
+                    paletteTitle={palette.title}
+                    creator={palette.creator}
+                    currentBGTheme={currentBGTheme}
+                    onLike={() => handleLikePalette(palette._id)}
+                    onUnlike={() => handleUnlikePalette(palette._id)}
+                    liked={palette.liked === "liked"}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <h2>Create some palettes to start saving them here</h2>
+            )
+          ) : hasLikedpalettes ? (
             <ul className="profile__palette-list">
-              {userPalettes.map((palette) => (
+              {likedPalettes.map((palette) => (
                 <PaletteCard
                   key={palette._id}
                   paletteImage={palette.image}
@@ -135,22 +252,14 @@ function Profile({ isLoggedIn, userName }) {
                   paletteTitle={palette.title}
                   creator={palette.creator}
                   currentBGTheme={currentBGTheme}
+                  onLike={() => handleLikePalette(palette._id)}
+                  onUnlike={() => handleUnlikePalette(palette._id)}
+                  liked={palette.liked === "liked"}
                 />
               ))}
             </ul>
           ) : (
-            <ul className="profile__palette-list">
-              {defaultPalettes.slice(3, 6).map((palette) => (
-                <PaletteCard
-                  key={palette._id}
-                  paletteImage={palette.image}
-                  paletteColors={palette.colors}
-                  paletteTitle={palette.title}
-                  creator={palette.creator}
-                  currentBGTheme={currentBGTheme}
-                />
-              ))}
-            </ul>
+            <h2>Like some palettes to start saving them here</h2>
           )}
         </div>
       </div>

@@ -7,15 +7,16 @@ import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPre
 import { getRandomPhoto } from "../../utils/UnsplashApi";
 import { getPhotoPalette, filterPhotoPalette } from "../../utils/ColorThiefApi";
 import { savePalette } from "../../utils/api";
+import { v4 as uuidv4 } from "uuid";
 
 function GeneratedPaletteFromPhotoModal({
   isOpen,
   handleClose,
   photoDetails,
   isLoggedIn,
-  onSavePaletteClick,
   userName,
   palettes,
+  navigate,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [palette, setPalette] = useState([]);
@@ -57,17 +58,26 @@ function GeneratedPaletteFromPhotoModal({
   };
 
   const handleSavePalette = async () => {
-    const idNumb = palettes.length + 1;
-    const newPalette = {
-      _id: idNumb,
-      title: paletteTitle,
-      imageUrl: photo.links.html,
-      colors: palette.map((color) => ({ color })),
-      creator: userName,
-    };
-    console.log(newPalette);
-    await savePalette(newPalette);
+    if (isLoggedIn) {
+      const idNumb = palettes.length + 1;
+      const newPalette = {
+        _id: idNumb,
+        title: paletteTitle,
+        imageUrl: photo.links.html,
+        colors: palette.map((color) => ({ c_id: uuidv4(), color })),
+        creator: userName,
+      };
+      await savePalette(newPalette);
+      navigate("/profile");
+    } else {
+      alert("You need to be logged in to like a palette.");
+    }
     handleClose();
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSavePalette();
   };
 
   return (
@@ -132,7 +142,7 @@ function GeneratedPaletteFromPhotoModal({
         {!loading ? (
           <>
             {saving ? (
-              <form>
+              <form onSubmit={handleFormSubmit}>
                 <input
                   type="text"
                   className="modal__input"
@@ -142,11 +152,7 @@ function GeneratedPaletteFromPhotoModal({
                   value={paletteTitle}
                   onChange={handleInputChange}
                 />
-                <button
-                  onClick={handleSavePalette}
-                  type="button"
-                  className="generated-card-modal__save"
-                >
+                <button type="submit" className="generated-card-modal__save">
                   Save
                 </button>
               </form>

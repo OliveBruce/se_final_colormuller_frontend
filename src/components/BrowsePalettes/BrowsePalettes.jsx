@@ -1,15 +1,35 @@
 import "./BrowsePalettes.css";
-import { defaultPalettes } from "../../utils/constants";
 import PaletteCard from "../PaletteCard/PaletteCard";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 
-function BrowsePalettes({ palettes }) {
+function BrowsePalettes({
+  palettes,
+  handleLikePalette,
+  handleUnlikePalette,
+  isLoggedIn,
+}) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [showNumber, setShowNumber] = useState(3);
 
   const showMore = () => {
     setShowNumber(showNumber + 3);
+  };
+
+  const handleLike = (paletteId) => {
+    if (isLoggedIn) {
+      handleLikePalette(paletteId);
+    } else {
+      alert("You need to be logged in to like a palette.");
+    }
+  };
+
+  const handleUnlike = (paletteId) => {
+    if (isLoggedIn) {
+      handleUnlikePalette(paletteId);
+    } else {
+      alert("You need to be logged in to unlike a palette.");
+    }
   };
 
   return (
@@ -40,11 +60,14 @@ function BrowsePalettes({ palettes }) {
                 paletteTitle={palette.title}
                 creator={palette.creator}
                 currentBGTheme={currentBGTheme}
+                onLike={() => handleLike(palette._id)}
+                onUnlike={() => handleUnlike(palette._id)}
+                liked={palette.liked === "liked"}
               />
             );
           })}
         </ul>
-        {showNumber < defaultPalettes.length ? (
+        {showNumber < palettes.length ? (
           <button
             className="browse-palettes__show-more"
             type="button"

@@ -7,14 +7,15 @@ import { getRandomPalette, filterPalette } from "../../utils/ColorMindApi";
 import Preloader from "../Preloader/Preloader";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 import { savePalette } from "../../utils/api";
+import { v4 as uuidv4 } from "uuid";
 
 function GeneratedPaletteModal({
   isOpen,
   handleClose,
-  isLoggedIn,
-  onSavePaletteClick,
   userName,
   palettes,
+  isLoggedIn,
+  navigate,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [palette, setPalette] = useState([]);
@@ -50,16 +51,25 @@ function GeneratedPaletteModal({
   };
 
   const handleSavePalette = async () => {
-    const idNumb = palettes.length + 1;
-    const newPalette = {
-      _id: idNumb,
-      title: paletteTitle,
-      colors: palette.map((color) => ({ color })),
-      creator: userName,
-    };
-    console.log(newPalette);
-    await savePalette(newPalette);
+    if (isLoggedIn) {
+      const idNumb = palettes.length + 1;
+      const newPalette = {
+        _id: idNumb,
+        title: paletteTitle,
+        colors: palette.map((color) => ({ c_id: uuidv4(), color })),
+        creator: userName,
+      };
+      await savePalette(newPalette);
+      navigate("/profile");
+    } else {
+      alert("You need to be logged in to like a palette.");
+    }
     handleClose();
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSavePalette();
   };
 
   return (
@@ -86,7 +96,7 @@ function GeneratedPaletteModal({
         {!loading ? (
           <>
             {saving ? (
-              <form>
+              <form onSubmit={handleFormSubmit}>
                 <input
                   type="text"
                   className="modal__input"
@@ -96,11 +106,7 @@ function GeneratedPaletteModal({
                   value={paletteTitle}
                   onChange={handleInputChange}
                 />
-                <button
-                  onClick={handleSavePalette}
-                  type="button"
-                  className="generated-card-modal__save"
-                >
+                <button type="submit" className="generated-card-modal__save">
                   Save
                 </button>
               </form>

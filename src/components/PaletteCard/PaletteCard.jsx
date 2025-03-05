@@ -1,5 +1,6 @@
 import "./PaletteCard.css";
 import LikeImage from "../../assets/like.svg";
+import LikedImage from "../../assets/liked.svg";
 import PaletteColor from "../PaletteColor/PaletteColor";
 import rgbHex from "rgb-hex";
 import { useState, useEffect } from "react";
@@ -11,12 +12,16 @@ function PaletteCard({
   paletteColors,
   creator,
   currentBGTheme,
+  onLike,
+  onUnlike,
+  liked,
 }) {
   const [imageUrl, setImageUrl] = useState("");
   const [imageAlt, setImageAlt] = useState("");
   const [imageLink, setImageLink] = useState("");
   const [imageAuthor, setImageAuthor] = useState("");
   const [imageAuthorLink, setImageAuthorLink] = useState("");
+  const [isLiked, setIsLiked] = useState(liked);
 
   useEffect(() => {
     const fetchImageUrl = async () => {
@@ -37,6 +42,19 @@ function PaletteCard({
     }
   }, [paletteImage]);
 
+  const handleLikeClick = () => {
+    if (isLiked) {
+      if (onUnlike) {
+        onUnlike();
+      }
+    } else {
+      if (onLike) {
+        onLike();
+      }
+    }
+    setIsLiked(!isLiked);
+  };
+
   return (
     <div className="palette-card">
       <div
@@ -49,7 +67,21 @@ function PaletteCard({
       >
         <div className="palette-card__header">
           <h2 className="palette-card__title">{paletteTitle}</h2>
-          <img src={LikeImage} alt="Like" className="palette-card__like" />
+          {isLiked ? (
+            <img
+              src={LikedImage}
+              alt="Like"
+              className="palette-card__like"
+              onClick={handleLikeClick}
+            />
+          ) : (
+            <img
+              src={LikeImage}
+              alt="Like"
+              className="palette-card__like"
+              onClick={handleLikeClick}
+            />
+          )}
         </div>
         <ul className="palette-card__palette">
           {paletteColors.map((color) => {

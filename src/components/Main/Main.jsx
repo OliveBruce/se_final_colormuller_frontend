@@ -8,7 +8,6 @@ function Main({
   onUploadImageClick,
   onSignUpClick,
   onLoginClick,
-  onSavePaletteClick,
   onGeneratePaletteClick,
   onRandomPhotoClick,
   isLoggedIn,

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { authorize } from "../../utils/auth";
 
 function LoginModal({ isOpen, handleClose, handleSubmit }) {
   const [email, setEmail] = useState("");
@@ -14,13 +13,18 @@ function LoginModal({ isOpen, handleClose, handleSubmit }) {
     setPassword(e.target.value);
   };
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(email, password);
+  };
+
   return (
     <ModalWithForm
       title="Login"
       buttonText="Submit"
       isOpen={isOpen}
       handleClose={handleClose}
-      handleSubmit={handleSubmit}
+      handleSubmit={handleFormSubmit}
       redirectButton={
         <button type="button" className="modal__redirect-btn">
           or Sign Up

@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 import { getPhotoUpload } from "../../utils/UnsplashApi";
 import { authorize, checkToken, updateProfileName } from "../../utils/auth";
+import { BASE_URL } from "../../utils/constants";
 
 import Header from "../Header/Header";
 import SignUpModal from "../SignUpModal/SignUpModal";
@@ -64,7 +65,7 @@ function App() {
       setIsLoggedIn(true);
       fetchUser();
       handleClose();
-      navigate("/profile");
+      navigate(`${BASE_URL}/profile`);
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -76,7 +77,7 @@ function App() {
       setIsLoggedIn(true);
       setUserName(response.userName);
       handleClose();
-      navigate("/profile");
+      navigate(`${BASE_URL}/profile`);
     } catch (error) {
       console.error("Sign-up failed:", error);
     }
@@ -91,7 +92,7 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName("");
-    navigate("/");
+    navigate(`${BASE_URL}/`);
   };
 
   const handleUpdateProfileName = async (newName) => {
@@ -193,7 +194,7 @@ function App() {
           />
           <Routes>
             <Route
-              path="/"
+              path={`${BASE_URL}/`}
               element={
                 <Main
                   onUploadImageClick={onUploadImageClick}
@@ -207,7 +208,7 @@ function App() {
               }
             />
             <Route
-              path="/browse-palettes"
+              path={`${BASE_URL}/browse-palettes`}
               element={
                 <BrowsePalettes
                   palettes={palettes}
@@ -218,7 +219,7 @@ function App() {
               }
             />
             <Route
-              path="/profile"
+              path={`${BASE_URL}/profile`}
               element={
                 <Profile
                   isLoggedIn={isLoggedIn}

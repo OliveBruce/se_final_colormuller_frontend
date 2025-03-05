@@ -8,6 +8,7 @@ import { getRandomPhoto } from "../../utils/UnsplashApi";
 import { getPhotoPalette, filterPhotoPalette } from "../../utils/ColorThiefApi";
 import { savePalette } from "../../utils/api";
 import { v4 as uuidv4 } from "uuid";
+import { BASE_URL } from "../../utils/constants";
 
 function GeneratedPaletteFromPhotoModal({
   isOpen,
@@ -68,7 +69,7 @@ function GeneratedPaletteFromPhotoModal({
         creator: userName,
       };
       await savePalette(newPalette);
-      navigate("/profile");
+      navigate(`${BASE_URL}/profile`);
     } else {
       alert("You need to be logged in to like a palette.");
     }

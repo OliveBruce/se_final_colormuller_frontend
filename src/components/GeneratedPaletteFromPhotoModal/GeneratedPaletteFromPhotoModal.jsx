@@ -69,6 +69,8 @@ function GeneratedPaletteFromPhotoModal({
         creator: userName,
       };
       await savePalette(newPalette);
+      setIsSaving(false);
+      setPaletteTitle("");
       navigate(`/profile`);
     } else {
       alert("You need to be logged in to like a palette.");
@@ -79,6 +81,12 @@ function GeneratedPaletteFromPhotoModal({
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleSavePalette();
+  };
+
+  const handleOnClose = () => {
+    setIsSaving(false);
+    setPaletteTitle("");
+    handleClose();
   };
 
   return (
@@ -170,7 +178,7 @@ function GeneratedPaletteFromPhotoModal({
         ) : (
           ""
         )}
-        <button onClick={handleClose} type="button" className="modal__close">
+        <button onClick={handleOnClose} type="button" className="modal__close">
           {currentBGTheme === "light" ? (
             <img src={close_dark} alt="close" className="modal__close-btn" />
           ) : (

@@ -60,6 +60,8 @@ function GeneratedPaletteModal({
         creator: userName,
       };
       await savePalette(newPalette);
+      setIsSaving(false);
+      setPaletteTitle("");
       navigate(`/profile`);
     } else {
       alert("You need to be logged in to like a palette.");
@@ -70,6 +72,12 @@ function GeneratedPaletteModal({
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleSavePalette();
+  };
+
+  const handleOnClose = () => {
+    setIsSaving(false);
+    setPaletteTitle("");
+    handleClose();
   };
 
   return (
@@ -125,7 +133,7 @@ function GeneratedPaletteModal({
         )}
 
         <button
-          onClick={handleClose}
+          onClick={handleOnClose}
           type="button"
           className="generated-card-modal__close-btn"
         >

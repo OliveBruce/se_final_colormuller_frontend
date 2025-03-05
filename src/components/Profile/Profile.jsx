@@ -2,7 +2,6 @@ import "./Profile.css";
 import PaletteCard from "../PaletteCard/PaletteCard";
 import { useContext, useState, useEffect } from "react";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
-import { defaultPalettes } from "../../utils/constants";
 import {
   getUserPalettes,
   getLikedPalettes,

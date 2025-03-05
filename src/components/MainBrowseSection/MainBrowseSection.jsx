@@ -1,5 +1,4 @@
 import "./MainBrowseSection.css";
-import { defaultPalettes } from "../../utils/constants";
 import PaletteCard from "../PaletteCard/PaletteCard";
 import UserButton from "../UserButton/UserButton";
 import BrowsePalettesButton from "../BrowsePalettesButton/BrowsePalettesButton";

@@ -32,6 +32,7 @@ function LoginModal({ isOpen, handleClose, handleSubmit }) {
       }
     >
       <input
+        required
         type="email"
         className="modal__input"
         id="email-login"
@@ -41,6 +42,7 @@ function LoginModal({ isOpen, handleClose, handleSubmit }) {
         onChange={handleEmailChange}
       />
       <input
+        required
         type="password"
         className="modal__input"
         id="password-login"

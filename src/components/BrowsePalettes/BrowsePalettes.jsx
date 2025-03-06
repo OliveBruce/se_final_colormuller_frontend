@@ -1,6 +1,6 @@
 import "./BrowsePalettes.css";
 import PaletteCard from "../PaletteCard/PaletteCard";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
 
 function BrowsePalettes({
@@ -8,6 +8,7 @@ function BrowsePalettes({
   handleLikePalette,
   handleUnlikePalette,
   isLoggedIn,
+  fetchImageUrl,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [showNumber, setShowNumber] = useState(3);
@@ -63,6 +64,8 @@ function BrowsePalettes({
                 onLike={() => handleLike(palette._id)}
                 onUnlike={() => handleUnlike(palette._id)}
                 liked={palette.liked === "liked"}
+                fetchImageUrl={fetchImageUrl}
+                isLoggedIn={isLoggedIn}
               />
             );
           })}

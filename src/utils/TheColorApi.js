@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 const modeList = [
   "monochrome",
   "monochrome-dark",
@@ -31,5 +33,10 @@ export const getRandomPalette = async () => {
   }
 
   const data = await response.json();
-  return data.colors.map((color) => color.hex.value);
+
+  return data.colors.map((color) => {
+    return {
+      color: color.hex.value,
+    };
+  });
 };

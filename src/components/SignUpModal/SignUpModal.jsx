@@ -32,6 +32,7 @@ function SignUpModal({ isOpen, handleClose, handleSubmit }) {
       handleSubmit={handleFormSubmit}
     >
       <input
+        required
         type="email"
         className="modal__input"
         id="signup-email"
@@ -41,6 +42,7 @@ function SignUpModal({ isOpen, handleClose, handleSubmit }) {
         onChange={handleEmailChange}
       />
       <input
+        required
         type="password"
         className="modal__input"
         id="signup-password"
@@ -50,6 +52,7 @@ function SignUpModal({ isOpen, handleClose, handleSubmit }) {
         onChange={handlePasswordChange}
       />
       <input
+        required
         type="text"
         className="modal__input"
         id="signup-name"

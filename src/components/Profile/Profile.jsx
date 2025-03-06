@@ -14,6 +14,7 @@ function Profile({
   onLogoutClick,
   onUpdateProfileName,
   handleUnlikePalette,
+  fetchImageUrl,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
   const [isCheckedMyPalettes, setIsCheckedMyPalettes] = useState(true);
@@ -140,6 +141,7 @@ function Profile({
               {isEditing ? (
                 <form onSubmit={handleNameSubmit}>
                   <input
+                    required
                     type="text"
                     className="modal__input profile__input"
                     value={newName}
@@ -235,6 +237,8 @@ function Profile({
                     onLike={() => handleLikePalette(palette._id)}
                     onUnlike={() => handleUnlikePalette(palette._id)}
                     liked={palette.liked === "liked"}
+                    fetchImageUrl={fetchImageUrl}
+                    isLoggedIn={isLoggedIn}
                   />
                 ))}
               </ul>
@@ -254,6 +258,8 @@ function Profile({
                   onLike={() => handleLikePalette(palette._id)}
                   onUnlike={() => handleUnlikePalette(palette._id)}
                   liked={palette.liked === "liked"}
+                  fetchImageUrl={fetchImageUrl}
+                  isLoggedIn={isLoggedIn}
                 />
               ))}
             </ul>

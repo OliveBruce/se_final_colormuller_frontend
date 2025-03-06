@@ -2,44 +2,20 @@ import "./GeneratedPaletteModal.css";
 import close_light from "../../assets/close.svg";
 import close_dark from "../../assets/close_dark.svg";
 import PaletteColor from "../PaletteColor/PaletteColor";
-import { useContext, useState, useEffect } from "react";
-import { getRandomPalette } from "../../utils/TheColorApi";
+import { useContext, useState } from "react";
 import Preloader from "../Preloader/Preloader";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
-import { savePalette } from "../../utils/api";
-import { v4 as uuidv4 } from "uuid";
 
 function GeneratedPaletteModal({
   isOpen,
   handleClose,
-  userName,
-  palettes,
-  isLoggedIn,
-  navigate,
+  handleSavePalette,
+  currentPalette,
+  loading,
+  setPaletteTitle,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
-  const [palette, setPalette] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [saving, setIsSaving] = useState(false);
-  const [paletteTitle, setPaletteTitle] = useState("");
-
-  useEffect(() => {
-    const fetchPalette = async () => {
-      setLoading(true);
-      try {
-        const palette = await getRandomPalette();
-        setPalette(palette);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (isOpen) {
-      fetchPalette();
-    }
-  }, [isOpen]);
 
   const handleSavePaletteClick = async () => {
     return setIsSaving(true);
@@ -49,35 +25,18 @@ function GeneratedPaletteModal({
     setPaletteTitle(e.target.value);
   };
 
-  const handleSavePalette = async () => {
-    if (isLoggedIn) {
-      const idNumb = palettes.length + 1;
-      const newPalette = {
-        _id: idNumb,
-        title: paletteTitle,
-        colors: palette.map((color) => ({ c_id: uuidv4(), color })),
-        creator: userName,
-      };
-      await savePalette(newPalette);
-      setIsSaving(false);
-      setPaletteTitle("");
-      navigate(`/profile`);
-    } else {
-      setIsSaving(false);
-      setPaletteTitle("");
-      alert("You need to be logged in to like a palette.");
-    }
-    handleClose();
+  const handleOnSavePalette = () => {
+    setIsSaving(false);
+    handleSavePalette();
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleSavePalette();
+    handleOnSavePalette();
   };
 
   const handleOnClose = () => {
     setIsSaving(false);
-    setPaletteTitle("");
     handleClose();
   };
 
@@ -94,8 +53,8 @@ function GeneratedPaletteModal({
         <div className="generated-card-modal__palette">
           {loading ? (
             <Preloader currentBGTheme={currentBGTheme} />
-          ) : palette && palette.length > 0 ? (
-            palette.map((color, index) => (
+          ) : currentPalette && currentPalette.length > 0 ? (
+            currentPalette.map((color, index) => (
               <PaletteColor key={index} color={color} colorText={color} />
             ))
           ) : (
@@ -107,12 +66,12 @@ function GeneratedPaletteModal({
             {saving ? (
               <form onSubmit={handleFormSubmit}>
                 <input
+                  required
                   type="text"
                   className="modal__input"
                   id="palette-title"
                   placeholder="Palette Title"
                   autoComplete="off"
-                  value={paletteTitle}
                   onChange={handleInputChange}
                 />
                 <button type="submit" className="generated-card-modal__save">

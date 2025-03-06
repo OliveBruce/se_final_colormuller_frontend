@@ -33,6 +33,7 @@ function ProvideImageModal({ isOpen, handleClose, handleSubmitPhoto }) {
         paste it here to generate a palette from an Image of your choosing.
       </p>
       <input
+        required
         type="url"
         className="modal__input"
         id="image_upload"

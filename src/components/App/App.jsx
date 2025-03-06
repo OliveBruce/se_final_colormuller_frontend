@@ -2,9 +2,17 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
-import { getPhotoUpload } from "../../utils/UnsplashApi";
+import { getPhotoUpload, getRandomPhoto } from "../../utils/UnsplashApi";
+import { getRandomPalette } from "../../utils/TheColorApi";
+import { filterPhotoPalette, getPhotoPalette } from "../../utils/ColorThiefApi";
 import { authorize, checkToken, updateProfileName } from "../../utils/auth";
-import { getItems, likePalette, unlikePalette } from "../../utils/api";
+import {
+  getItems,
+  savePalette,
+  likePalette,
+  unlikePalette,
+} from "../../utils/api";
+import { v4 as uuidv4 } from "uuid";
 
 import Header from "../Header/Header";
 import SignUpModal from "../SignUpModal/SignUpModal";
@@ -25,6 +33,11 @@ function App() {
   const [userName, setUserName] = useState("");
   const [photoDetails, setPhotoDetails] = useState(null);
   const [palettes, setPalettes] = useState([]);
+  const [currentPalette, setCurrentPalette] = useState([]);
+  const [paletteTitle, setPaletteTitle] = useState("");
+  const [paletteImage, setPaletteImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [photo, setPhotoResponse] = useState(null);
 
   const navigate = useNavigate();
 
@@ -40,22 +53,38 @@ function App() {
     setActiveModal("upload-image");
   };
 
-  const onGeneratePaletteClick = () => {
+  const onGeneratePaletteClick = async () => {
     setActiveModal("generated-palette");
+    setLoading(true);
+    try {
+      const palette = await getRandomPalette();
+      const paletteColors = palette.map((color) => color.color);
+      setCurrentPalette(paletteColors);
+    } catch (error) {
+      console.error("Error generating palette:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const onRandomPhotoClick = () => {
+  const onRandomPhotoClick = async () => {
+    setLoading(true);
     setActiveModal("generated-palette-from-photo");
     setPhotoDetails(null);
-  };
-
-  const handleSubmitPhoto = async (url) => {
     try {
-      const photo = await getPhotoUpload(url);
-      setPhotoDetails(photo);
-      setActiveModal("generated-palette-from-photo");
+      let photoToUse = photoDetails;
+      if (!photoToUse) {
+        photoToUse = await getRandomPhoto();
+      }
+      setPhotoResponse(photoToUse);
+      const palette = await getPhotoPalette(photoToUse.urls.small);
+      const filteredPalette = filterPhotoPalette(palette);
+      setCurrentPalette(filteredPalette);
+      setPaletteImage(photoToUse.id);
     } catch (error) {
-      console.error("Error fetching photo:", error);
+      console.error("Error generating palette:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,12 +133,59 @@ function App() {
     }
   };
 
+  const handleSavePalette = async () => {
+    if (isLoggedIn) {
+      const idNumb = palettes.length + 1;
+      const newPalette = {
+        _id: idNumb,
+        title: paletteTitle,
+        image: photo ? photo.links.html : null,
+        colors: currentPalette.map((color) => ({ c_id: uuidv4(), color })),
+        creator: userName,
+      };
+      await savePalette(newPalette);
+      navigate(`/profile`);
+    } else {
+      alert("You need to be logged in to like a palette.");
+    }
+    handleClose();
+  };
+
   const fetchUser = async () => {
     try {
       const response = await checkToken();
       setUserName(response.data.name);
     } catch (error) {
       console.error("Error fetching user info:", error);
+    }
+  };
+
+  const handleSubmitPhoto = async (url) => {
+    setLoading(true);
+    setActiveModal("generated-palette-from-photo");
+    setPhotoDetails(null);
+    try {
+      let photoToUse = photoDetails;
+      if (!photoToUse) {
+        photoToUse = await getPhotoUpload(url);
+      }
+      setPhotoResponse(photoToUse);
+      const palette = await getPhotoPalette(photoToUse.urls.small);
+      const filteredPalette = filterPhotoPalette(palette);
+      setCurrentPalette(filteredPalette);
+      setPaletteImage(photoToUse.id);
+    } catch (error) {
+      console.error("Error generating palette:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchImageUrl = (imageUrl) => {
+    try {
+      return getPhotoUpload(imageUrl);
+    } catch (error) {
+      console.error("Error fetching photo:", error);
     }
   };
 
@@ -204,6 +280,7 @@ function App() {
                   onRandomPhotoClick={onRandomPhotoClick}
                   isLoggedIn={isLoggedIn}
                   palettes={palettes}
+                  fetchImageUrl={fetchImageUrl}
                 />
               }
             />
@@ -215,6 +292,8 @@ function App() {
                   handleLikePalette={handleLikePalette}
                   handleUnlikePalette={handleUnlikePalette}
                   isLoggedIn={isLoggedIn}
+                  fetchImageUrl={fetchImageUrl}
+                  paletteImage={paletteImage}
                 />
               }
             />
@@ -228,6 +307,7 @@ function App() {
                     onLogoutClick={handleLogout}
                     onUpdateProfileName={handleUpdateProfileName}
                     handleUnlikePalette={handleUnlikePalette}
+                    fetchImageUrl={fetchImageUrl}
                   />
                 </ProtectedRoute>
               }
@@ -257,6 +337,10 @@ function App() {
           userName={userName}
           palettes={palettes}
           navigate={navigate}
+          handleSavePalette={handleSavePalette}
+          currentPalette={currentPalette}
+          loading={loading}
+          setPaletteTitle={setPaletteTitle}
         />
         <GeneratedPaletteFromPhotoModal
           isOpen={activeModal === "generated-palette-from-photo"}
@@ -266,6 +350,11 @@ function App() {
           userName={userName}
           palettes={palettes}
           navigate={navigate}
+          handleSavePalette={handleSavePalette}
+          currentPalette={currentPalette}
+          loading={loading}
+          setPaletteTitle={setPaletteTitle}
+          photo={photo}
         />
       </CurrentBackgroundPreference.Provider>
     </div>

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import GenerateCard from "../GenerateCard/GenerateCard";
 import PaletteColor from "../PaletteColor/PaletteColor";
 

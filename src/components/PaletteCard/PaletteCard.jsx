@@ -4,7 +4,6 @@ import LikedImage from "../../assets/liked.svg";
 import PaletteColor from "../PaletteColor/PaletteColor";
 import rgbHex from "rgb-hex";
 import { useState, useEffect } from "react";
-import { getPhotoUpload } from "../../utils/UnsplashApi";
 
 function PaletteCard({
   paletteImage,
@@ -15,6 +14,8 @@ function PaletteCard({
   onLike,
   onUnlike,
   liked,
+  fetchImageUrl,
+  isLoggedIn,
 }) {
   const [imageUrl, setImageUrl] = useState("");
   const [imageAlt, setImageAlt] = useState("");
@@ -24,35 +25,38 @@ function PaletteCard({
   const [isLiked, setIsLiked] = useState(liked);
 
   useEffect(() => {
-    const fetchImageUrl = async () => {
-      try {
-        const photo = await getPhotoUpload(paletteImage);
-        setImageUrl(photo.urls.small);
-        setImageAlt(photo.alt_description);
-        setImageLink(photo.links.html);
-        setImageAuthor(photo.user.name);
-        setImageAuthorLink(photo.user.links.html);
-      } catch (error) {
-        console.error("Error fetching photo:", error);
+    const fetchImage = async () => {
+      if (paletteImage && fetchImageUrl) {
+        try {
+          const imageData = await fetchImageUrl(paletteImage);
+          setImageUrl(imageData.urls.small);
+          setImageAlt(imageData.alt_description || "Palette Image");
+          setImageLink(imageData.links.html);
+          setImageAuthor(imageData.user.name);
+          setImageAuthorLink(imageData.user.links.html);
+        } catch (error) {
+          console.error("Error fetching image:", error);
+        }
       }
     };
-
-    if (paletteImage) {
-      fetchImageUrl();
+    if (paletteImage !== null) {
+      fetchImage();
     }
-  }, [paletteImage]);
+  }, []);
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      if (onUnlike) {
-        onUnlike();
+    if (isLoggedIn) {
+      if (isLiked) {
+        if (onUnlike) {
+          onUnlike();
+        }
+      } else {
+        if (onLike) {
+          onLike();
+        }
       }
-    } else {
-      if (onLike) {
-        onLike();
-      }
+      setIsLiked(!isLiked);
     }
-    setIsLiked(!isLiked);
   };
 
   return (
@@ -67,7 +71,7 @@ function PaletteCard({
       >
         <div className="palette-card__header">
           <h2 className="palette-card__title">{paletteTitle}</h2>
-          {isLiked ? (
+          {isLiked && isLoggedIn ? (
             <img
               src={LikedImage}
               alt="Like"
@@ -105,7 +109,7 @@ function PaletteCard({
             }
           })}
         </ul>
-        {paletteImage !== "" && (
+        {imageUrl && (
           <>
             <a
               href={imageLink}

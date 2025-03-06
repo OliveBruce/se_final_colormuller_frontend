@@ -1,54 +1,26 @@
 import close_light from "../../assets/close.svg";
 import close_dark from "../../assets/close_dark.svg";
 import PaletteColor from "../PaletteColor/PaletteColor";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import Preloader from "../Preloader/Preloader";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
-import { getRandomPhoto } from "../../utils/UnsplashApi";
-import { getPhotoPalette, filterPhotoPalette } from "../../utils/ColorThiefApi";
-import { savePalette } from "../../utils/api";
-import { v4 as uuidv4 } from "uuid";
-import { BASE_URL } from "../../utils/constants";
 
 function GeneratedPaletteFromPhotoModal({
   isOpen,
   handleClose,
-  photoDetails,
-  isLoggedIn,
-  userName,
-  palettes,
-  navigate,
+  photo,
+  handleSavePalette,
+  currentPalette,
+  loading,
+  setPaletteTitle,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
-  const [palette, setPalette] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [photo, setPhotoResponse] = useState(null);
   const [saving, setIsSaving] = useState(false);
-  const [paletteTitle, setPaletteTitle] = useState("");
 
-  useEffect(() => {
-    const fetchPhotoAndPalette = async () => {
-      setLoading(true);
-      try {
-        let photoToUse = photoDetails;
-        if (!photoToUse) {
-          photoToUse = await getRandomPhoto();
-        }
-        setPhotoResponse(photoToUse);
-        const palette = await getPhotoPalette(photoToUse.urls.small);
-        const filteredPalette = filterPhotoPalette(palette);
-        setPalette(filteredPalette);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (isOpen) {
-      fetchPhotoAndPalette();
-    }
-  }, [isOpen]);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleOnSavePalette();
+  };
 
   const handleSavePaletteClick = async () => {
     return setIsSaving(true);
@@ -58,36 +30,13 @@ function GeneratedPaletteFromPhotoModal({
     setPaletteTitle(e.target.value);
   };
 
-  const handleSavePalette = async () => {
-    if (isLoggedIn) {
-      const idNumb = palettes.length + 1;
-      const newPalette = {
-        _id: idNumb,
-        title: paletteTitle,
-        imageUrl: photo.links.html,
-        colors: palette.map((color) => ({ c_id: uuidv4(), color })),
-        creator: userName,
-      };
-      await savePalette(newPalette);
-      setIsSaving(false);
-      setPaletteTitle("");
-      navigate(`/profile`);
-    } else {
-      setIsSaving(false);
-      setPaletteTitle("");
-      alert("You need to be logged in to like a palette.");
-    }
-    handleClose();
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  const handleOnSavePalette = () => {
+    setIsSaving(false);
     handleSavePalette();
   };
 
   const handleOnClose = () => {
     setIsSaving(false);
-    setPaletteTitle("");
     handleClose();
   };
 
@@ -104,10 +53,10 @@ function GeneratedPaletteFromPhotoModal({
         <div className="generated-card-modal__palette-section">
           {loading ? (
             <Preloader currentBGTheme={currentBGTheme} />
-          ) : palette.length > 0 && photo ? (
+          ) : currentPalette.length > 0 && photo ? (
             <>
               <div className="generated-card-modal__palette">
-                {palette.map((color, index) => (
+                {currentPalette.map((color, index) => (
                   <PaletteColor key={index} color={color} colorText={color} />
                 ))}
               </div>
@@ -155,12 +104,12 @@ function GeneratedPaletteFromPhotoModal({
             {saving ? (
               <form onSubmit={handleFormSubmit}>
                 <input
+                  required
                   type="text"
                   className="modal__input"
                   id="palette-title"
                   placeholder="Palette Title"
                   autoComplete="off"
-                  value={paletteTitle}
                   onChange={handleInputChange}
                 />
                 <button type="submit" className="generated-card-modal__save">

@@ -102,33 +102,50 @@ const palettes = [
 ];
 
 export function getItems() {
-  return new Promise((resolve) => {
-    resolve(palettes);
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(palettes);
+    } catch (error) {
+      reject(new Error("Error fetching items"));
+    }
   });
 }
 
 export function savePalette(palette) {
   return new Promise((resolve, reject) => {
-    const idNumb = palettes.length + 1;
-    const newPalette = {
-      _id: idNumb,
-      title: palette.title,
-      image: palette.imageUrl || "",
-      colors: palette.colors,
-      creator: palette.creator,
-      liked: "",
-    };
-    palettes.unshift(newPalette);
-    resolve(newPalette);
+    try {
+      if (!palette.title || !palette.colors || !palette.creator) {
+        throw new Error("Missing required fields");
+      }
+
+      const idNumb = palettes.length + 1;
+      const newPalette = {
+        _id: idNumb,
+        title: palette.title,
+        image: palette.image || null,
+        colors: palette.colors,
+        creator: palette.creator,
+        liked: "",
+      };
+
+      palettes.unshift(newPalette);
+      resolve(newPalette);
+    } catch (error) {
+      reject(error);
+    }
   });
 }
 
 export function getUserPalettes(userName) {
   return new Promise((resolve, reject) => {
-    const userPalettes = palettes.filter(
-      (palette) => palette.creator === userName
-    );
-    resolve(userPalettes);
+    try {
+      const userPalettes = palettes.filter(
+        (palette) => palette.creator === userName
+      );
+      resolve(userPalettes);
+    } catch (error) {
+      reject(new Error("Error fetching items"));
+    }
   });
 }
 
@@ -158,10 +175,14 @@ export function unlikePalette(paletteId) {
 
 export function getLikedPalettes() {
   return new Promise((resolve, reject) => {
-    const likedPalettes = palettes.filter(
-      (palette) => palette.liked === "liked"
-    );
-    resolve(likedPalettes);
+    try {
+      const likedPalettes = palettes.filter(
+        (palette) => palette.liked === "liked"
+      );
+      resolve(likedPalettes);
+    } catch (error) {
+      reject(new Error("Couldn't get liked palettes"));
+    }
   });
 }
 
@@ -169,6 +190,6 @@ function checkResponse(res) {
   return res ? res.json() : Promise.reject(`Error: ${res.status}`);
 }
 
-export function request(url, options) {
-  return fetch(url, options).then(checkResponse);
+export function request(req) {
+  return fetch(req).then(checkResponse);
 }

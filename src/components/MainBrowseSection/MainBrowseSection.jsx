@@ -9,6 +9,7 @@ function MainBrowseSection({
   currentBGTheme,
   isLoggedIn,
   palettes,
+  fetchImageUrl,
 }) {
   return (
     <div
@@ -43,6 +44,8 @@ function MainBrowseSection({
               paletteTitle={palette.title}
               creator={palette.creator}
               currentBGTheme={currentBGTheme}
+              fetchImageUrl={fetchImageUrl}
+              isLoggedIn={isLoggedIn}
             />
           );
         })}

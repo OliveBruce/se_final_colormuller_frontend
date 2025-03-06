@@ -12,6 +12,7 @@ function Main({
   onRandomPhotoClick,
   isLoggedIn,
   palettes,
+  fetchImageUrl,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
 
@@ -38,6 +39,7 @@ function Main({
           currentBGTheme={currentBGTheme}
           isLoggedIn={isLoggedIn}
           palettes={palettes}
+          fetchImageUrl={fetchImageUrl}
         />
       </div>
     </main>

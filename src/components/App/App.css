@@ -5,8 +5,8 @@
 }
 
 .app__content {
-  max-width: 1920px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0;
   transition: all 0.2s;
 }

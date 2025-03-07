@@ -216,6 +216,7 @@ function App() {
         )
       );
       fetchLikedPalettes();
+      console.log("user palettes fetched");
     } catch (error) {
       console.error("Failed to unlike palette:", error);
     }

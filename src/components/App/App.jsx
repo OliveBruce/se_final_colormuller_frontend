@@ -7,6 +7,8 @@ import { getRandomPalette } from "../../utils/TheColorApi";
 import { filterPhotoPalette, getPhotoPalette } from "../../utils/ColorThiefApi";
 import { authorize, checkToken, updateProfileName } from "../../utils/auth";
 import {
+  getUserPalettes,
+  getLikedPalettes,
   getItems,
   savePalette,
   likePalette,
@@ -38,6 +40,12 @@ function App() {
   const [paletteImage, setPaletteImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [photo, setPhotoResponse] = useState(null);
+  const [userPalettes, setUserPalettes] = useState([]);
+  const [likedPalettes, setLikedPalettes] = useState([]);
+  const [hasUserPalettes, setHasUserPalettes] = useState(false);
+  const [hasLikedPalettes, setHasLikedPalettes] = useState(false);
+  const [isCheckedMyPalettes, setIsCheckedMyPalettes] = useState(true);
+  const [isCheckedSavedPalettes, setIsCheckedSavedPalettes] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,6 +63,7 @@ function App() {
 
   const onGeneratePaletteClick = async () => {
     setActiveModal("generated-palette");
+    setPhotoResponse(null);
     setLoading(true);
     try {
       const palette = await getRandomPalette();
@@ -145,6 +154,7 @@ function App() {
       };
       await savePalette(newPalette);
       navigate(`/profile`);
+      fetchUserPalettes();
     } else {
       alert("You need to be logged in to like a palette.");
     }
@@ -157,6 +167,57 @@ function App() {
       setUserName(response.data.name);
     } catch (error) {
       console.error("Error fetching user info:", error);
+    }
+  };
+
+  const fetchUserPalettes = async () => {
+    if (isLoggedIn) {
+      try {
+        const palettes = await getUserPalettes(userName);
+        setUserPalettes(palettes);
+        setHasUserPalettes(palettes.length > 0);
+      } catch (error) {
+        console.error("Error fetching user palettes:", error);
+      }
+    }
+  };
+
+  const fetchLikedPalettes = async () => {
+    if (isLoggedIn) {
+      try {
+        const palettes = await getLikedPalettes();
+        setLikedPalettes(palettes);
+        setHasLikedPalettes(palettes.length > 0);
+      } catch (error) {
+        console.error("Error fetching liked palettes:", error);
+      }
+    }
+  };
+
+  const handleLikePalette = async (paletteId) => {
+    try {
+      const updatedPalette = await likePalette(paletteId);
+      setUserPalettes((prevPalettes) =>
+        prevPalettes.map((palette) =>
+          palette._id === paletteId ? updatedPalette : palette
+        )
+      );
+    } catch (error) {
+      console.error("Failed to like palette:", error);
+    }
+  };
+
+  const handleUnlikePalette = async (paletteId) => {
+    try {
+      const updatedPalette = await unlikePalette(paletteId);
+      setUserPalettes((prevPalettes) =>
+        prevPalettes.map((palette) =>
+          palette._id === paletteId ? updatedPalette : palette
+        )
+      );
+      fetchLikedPalettes();
+    } catch (error) {
+      console.error("Failed to unlike palette:", error);
     }
   };
 
@@ -202,30 +263,14 @@ function App() {
     }
   };
 
-  const handleLikePalette = async (paletteId) => {
-    try {
-      const updatedPalette = await likePalette(paletteId);
-      setPalettes((prevPalettes) =>
-        prevPalettes.map((palette) =>
-          palette._id === paletteId ? updatedPalette : palette
-        )
-      );
-    } catch (error) {
-      console.error("Failed to like palette:", error);
-    }
+  const handleChangeSavedPalettes = () => {
+    setIsCheckedSavedPalettes(true);
+    setIsCheckedMyPalettes(false);
   };
 
-  const handleUnlikePalette = async (paletteId) => {
-    try {
-      const updatedPalette = await unlikePalette(paletteId);
-      setPalettes((prevPalettes) =>
-        prevPalettes.map((palette) =>
-          palette._id === paletteId ? updatedPalette : palette
-        )
-      );
-    } catch (error) {
-      console.error("Failed to unlike palette:", error);
-    }
+  const handleChangeMyPalettes = () => {
+    setIsCheckedMyPalettes(true);
+    setIsCheckedSavedPalettes(false);
   };
 
   useEffect(() => {
@@ -256,6 +301,18 @@ function App() {
       document.removeEventListener("keydown", handleEscClose);
     };
   }, [activeModal]);
+
+  useEffect(() => {
+    if (isCheckedMyPalettes) {
+      fetchUserPalettes();
+    }
+  }, [isLoggedIn, userName, isCheckedMyPalettes]);
+
+  useEffect(() => {
+    if (isCheckedSavedPalettes) {
+      fetchLikedPalettes();
+    }
+  }, [isLoggedIn, isCheckedSavedPalettes]);
 
   return (
     <div className="app">
@@ -308,6 +365,17 @@ function App() {
                     onUpdateProfileName={handleUpdateProfileName}
                     handleUnlikePalette={handleUnlikePalette}
                     fetchImageUrl={fetchImageUrl}
+                    userPalettes={userPalettes}
+                    likedPalettes={likedPalettes}
+                    hasUserPalettes={hasUserPalettes}
+                    hasLikedPalettes={hasLikedPalettes}
+                    handleLikePalette={handleLikePalette}
+                    fetchUserPalettes={fetchUserPalettes}
+                    fetchLikedPalettes={fetchLikedPalettes}
+                    isCheckedMyPalettes={isCheckedMyPalettes}
+                    isCheckedSavedPalettes={isCheckedSavedPalettes}
+                    handleChangeSavedPalettes={handleChangeSavedPalettes}
+                    handleChangeMyPalettes={handleChangeMyPalettes}
                   />
                 </ProtectedRoute>
               }

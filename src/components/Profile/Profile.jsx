@@ -2,11 +2,6 @@ import "./Profile.css";
 import PaletteCard from "../PaletteCard/PaletteCard";
 import { useContext, useState, useEffect } from "react";
 import { CurrentBackgroundPreference } from "../../contexts/CurrentBackgroundPreference";
-import {
-  getUserPalettes,
-  getLikedPalettes,
-  likePalette,
-} from "../../utils/api";
 
 function Profile({
   isLoggedIn,
@@ -15,73 +10,19 @@ function Profile({
   onUpdateProfileName,
   handleUnlikePalette,
   fetchImageUrl,
+  userPalettes,
+  likedPalettes,
+  hasUserPalettes,
+  hasLikedPalettes,
+  handleLikePalette,
+  handleChangeSavedPalettes,
+  handleChangeMyPalettes,
+  isCheckedMyPalettes,
+  isCheckedSavedPalettes,
 }) {
   const { currentBGTheme } = useContext(CurrentBackgroundPreference);
-  const [isCheckedMyPalettes, setIsCheckedMyPalettes] = useState(true);
-  const [isCheckedSavedPalettes, setIsCheckedSavedPalettes] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(userName);
-  const [userPalettes, setUserPalettes] = useState([]);
-  const [likedPalettes, setLikedPalettes] = useState([]);
-  const [hasUserPalettes, setHasUserPalettes] = useState(false);
-  const [hasLikedpalettes, setHasLikedPalettes] = useState(false);
-
-  useEffect(() => {
-    const fetchUserPalettes = async () => {
-      if (isLoggedIn) {
-        try {
-          const palettes = await getUserPalettes(userName);
-          setUserPalettes(palettes);
-          setHasUserPalettes(palettes.length > 0);
-        } catch (error) {
-          console.error("Error fetching user palettes:", error);
-        }
-      }
-    };
-
-    fetchUserPalettes();
-  }, [isLoggedIn, userName]);
-
-  useEffect(() => {
-    const fetchLikedPalettes = async () => {
-      if (isLoggedIn) {
-        try {
-          const palettes = await getLikedPalettes();
-          setLikedPalettes(palettes);
-          setHasLikedPalettes(palettes.length > 0);
-        } catch (error) {
-          console.error("Error fetching liked palettes:", error);
-        }
-      }
-    };
-
-    if (isCheckedSavedPalettes) {
-      fetchLikedPalettes();
-    }
-  }, [isLoggedIn, isCheckedSavedPalettes]);
-
-  const handleLikePalette = async (paletteId) => {
-    try {
-      const updatedPalette = await likePalette(paletteId);
-      setUserPalettes((prevPalettes) =>
-        prevPalettes.map((palette) =>
-          palette._id === paletteId ? updatedPalette : palette
-        )
-      );
-    } catch (error) {
-      console.error("Failed to like palette:", error);
-    }
-  };
-
-  const handleChangeSavedPalettes = () => {
-    setIsCheckedSavedPalettes(true);
-    setIsCheckedMyPalettes(false);
-  };
-
-  const handleChangeMyPalettes = () => {
-    setIsCheckedMyPalettes(true);
-    setIsCheckedSavedPalettes(false);
-  };
 
   const handleEditProfileClick = () => {
     setIsEditing(true);
@@ -94,20 +35,6 @@ function Profile({
   const handleNameSubmit = (e) => {
     e.preventDefault();
     onUpdateProfileName(newName);
-    setUserPalettes((prevPalettes) =>
-      prevPalettes.map((palette) =>
-        palette.creator === userName
-          ? { ...palette, creator: newName }
-          : palette
-      )
-    );
-    setLikedPalettes((prevPalettes) =>
-      prevPalettes.map((palette) =>
-        palette.creator === userName
-          ? { ...palette, creator: newName }
-          : palette
-      )
-    );
     setIsEditing(false);
   };
 
@@ -245,7 +172,7 @@ function Profile({
             ) : (
               <h2>Create some palettes to start saving them here</h2>
             )
-          ) : hasLikedpalettes ? (
+          ) : hasLikedPalettes ? (
             <ul className="profile__palette-list">
               {likedPalettes.map((palette) => (
                 <PaletteCard

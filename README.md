@@ -1,5 +1,5 @@
 # se_final_colormuller_frontend
 
-ColorMuller is an app that uses 3 different open-source API: Colormind, Color Thief, and Unsplash. Using these 3 API together, the app generates color palettes to help inspire creative minds.
+ColorMuller is an app that uses 3 different open-source API: The Color Api, Color Thief, and Unsplash. Using these 3 API together, the app generates color palettes to help inspire creative minds.
 
 Link to the live site on GitHub: [ColorMuller](https://olivebruce.github.io/se_final_colormuller_frontend/)

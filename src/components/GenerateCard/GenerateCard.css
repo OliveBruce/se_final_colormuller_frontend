@@ -1,0 +1,126 @@
+.generate-card {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+}
+
+.generate-card__content {
+  margin: 0;
+  padding: 18px 15px;
+  width: 400px;
+  height: 584px;
+  border: none;
+  border-radius: 16px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.generate-card__content:hover {
+  background-color: #426154;
+}
+
+.generate-card__content--dark {
+  background-color: #232323;
+  color: #fff;
+}
+
+.generate-card__content--light {
+  background-color: #e6e6e6;
+  color: #000;
+}
+
+.generate-card__title {
+  margin: 0 0 30px;
+  font-size: 24px;
+  line-height: 20px;
+  letter-spacing: -2px;
+}
+
+.generate-card__subtitle {
+  margin: -20px 0 14px;
+  font-size: 16px;
+}
+
+.generate-card__image {
+  margin: 0 -15px 14px;
+}
+
+.generate-card__palette {
+  margin: 0 0 14px;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  max-height: 472px;
+  gap: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.generate-card__palette-with-image {
+  max-height: 200px;
+}
+
+.generate-card__color-name {
+  font-size: 10px;
+  line-height: 20px;
+  text-align: center;
+  position: absolute;
+  bottom: 6px;
+  width: 68px;
+}
+
+.generate-card__footer {
+  margin: 0;
+  color: #398b69;
+}
+
+@media screen and (max-width: 520px) {
+  .generate-card__content {
+    width: 350px;
+    height: 400px;
+  }
+  .generate-card__title {
+    margin: 0 0 20px;
+    font-size: 18px;
+    line-height: 20px;
+  }
+  .generate-card__subtitle {
+    font-size: 14px;
+  }
+  .generate-card__image {
+    position: absolute;
+    top: 65px;
+    left: 16px;
+    width: 100%;
+  }
+  .generate-card__palette {
+    margin: 0 0 10px;
+    width: 100%;
+    height: 75%;
+    max-height: 345px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .generate-card {
+    margin: 0 0 20px;
+  }
+  .generate-card__content {
+    width: 300px;
+    height: 375px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .generate-card {
+    margin: 0 0 20px;
+  }
+  .generate-card__content {
+    padding: 18px 15px;
+    width: 280px;
+    height: 375px;
+    overflow: hidden;
+  }
+}

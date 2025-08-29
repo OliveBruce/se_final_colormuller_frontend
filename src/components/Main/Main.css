@@ -1,0 +1,17 @@
+.main__container {
+  padding: 25px;
+}
+
+.main__container--light {
+  background-color: #ffffff;
+}
+
+.main__container--dark {
+  background-color: #4b4b4b;
+}
+
+@media screen and (max-width: 375px) {
+  .main__container {
+    padding: 10px;
+  }
+}
